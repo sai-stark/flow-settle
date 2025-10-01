@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { 
   Select,
   SelectContent,
@@ -13,17 +12,12 @@ import {
 } from '@/components/ui/select';
 import { Plus, Search, Edit, Trash2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { ResponsiveTable } from '@/components/responsive-table';
+import { useIsMobile } from '@/hooks/use-media-query';
 
 const Configuration = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const isMobile = useIsMobile();
 
   const pricingConfigs = [
     { id: 1, customer: 'Acme Corp', type: 'Bank', model: 'Tiered', rate: '2.5% - 3.5%', status: 'Active', effectiveDate: '2024-01-01' },
@@ -38,53 +32,77 @@ const Configuration = () => {
     { id: 3, tsp: 'TSP Partner C', commission: '10% - 18%', tier: 'Tiered', status: 'Active' },
   ];
 
+  const pricingColumns = [
+    { key: 'customer', header: 'Customer', mobileLabel: 'Customer', className: 'font-medium' },
+    { key: 'type', header: 'Type', mobileLabel: 'Type', hideOnMobile: true },
+    { key: 'model', header: 'Pricing Model', mobileLabel: 'Model' },
+    { key: 'rate', header: 'Rate', mobileLabel: 'Rate', className: 'financial-number' },
+    { key: 'effectiveDate', header: 'Effective Date', mobileLabel: 'Effective', hideOnMobile: true },
+    { key: 'status', header: 'Status', mobileLabel: 'Status' },
+    { key: 'actions', header: 'Actions', mobileLabel: '', className: 'text-right' },
+  ];
+
+  const tspColumns = [
+    { key: 'tsp', header: 'TSP Partner', mobileLabel: 'TSP', className: 'font-medium' },
+    { key: 'commission', header: 'Commission', mobileLabel: 'Commission', className: 'financial-number' },
+    { key: 'tier', header: 'Tier Structure', mobileLabel: 'Tier' },
+    { key: 'status', header: 'Status', mobileLabel: 'Status' },
+    { key: 'actions', header: 'Actions', mobileLabel: '', className: 'text-right' },
+  ];
+
   return (
-    <div className="flex-1 space-y-6 p-6 animate-fade-in">
+    <div className="flex-1 space-y-4 p-4 animate-fade-in md:space-y-6 md:p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Configuration</h1>
-          <p className="text-muted-foreground mt-1">
-            Manage customer pricing and partner revenue sharing
+          <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Configuration</h1>
+          <p className="text-muted-foreground mt-1 text-sm md:text-base">
+            {isMobile ? 'Pricing & revenue' : 'Manage customer pricing and partner revenue sharing'}
           </p>
         </div>
       </div>
 
-      <Tabs defaultValue="pricing" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="pricing">Customer Pricing</TabsTrigger>
-          <TabsTrigger value="tsp">TSP Revenue Share</TabsTrigger>
+      <Tabs defaultValue="pricing" className="space-y-3 md:space-y-4">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="pricing" className="text-xs md:text-sm">
+            {isMobile ? 'Pricing' : 'Customer Pricing'}
+          </TabsTrigger>
+          <TabsTrigger value="tsp" className="text-xs md:text-sm">
+            {isMobile ? 'TSP Share' : 'TSP Revenue Share'}
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="pricing" className="space-y-4">
+        <TabsContent value="pricing" className="space-y-3 md:space-y-4">
           <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Pricing Configurations</CardTitle>
-                  <CardDescription>Set up and manage customer pricing models</CardDescription>
+            <CardHeader className="pb-3 md:pb-6">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="space-y-1">
+                  <CardTitle className={isMobile ? 'text-base' : 'text-lg'}>Pricing Configurations</CardTitle>
+                  <CardDescription className={isMobile ? 'text-xs' : 'text-sm'}>
+                    {isMobile ? 'Manage pricing models' : 'Set up and manage customer pricing models'}
+                  </CardDescription>
                 </div>
-                <Button className="bg-gradient-primary">
+                <Button className="bg-gradient-primary w-full sm:w-auto" size={isMobile ? 'default' : 'default'}>
                   <Plus className="mr-2 h-4 w-4" />
-                  New Pricing
+                  {isMobile ? 'New' : 'New Pricing'}
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center gap-4">
+            <CardContent className="space-y-3 px-3 md:space-y-4 md:px-6">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    placeholder="Search by customer name..."
+                    placeholder={isMobile ? 'Search...' : 'Search by customer name...'}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-9"
+                    className="pl-9 h-9"
                   />
                 </div>
                 <Select defaultValue="all">
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Filter by type" />
+                  <SelectTrigger className="w-full sm:w-[140px] h-9">
+                    <SelectValue placeholder="Filter" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-50 bg-popover">
                     <SelectItem value="all">All Types</SelectItem>
                     <SelectItem value="bank">Bank</SelectItem>
                     <SelectItem value="ecommerce">E-Commerce</SelectItem>
@@ -92,101 +110,109 @@ const Configuration = () => {
                 </Select>
               </div>
 
-              <div className="rounded-md border">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Pricing Model</TableHead>
-                      <TableHead>Rate</TableHead>
-                      <TableHead>Effective Date</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {pricingConfigs.map((config) => (
-                      <TableRow key={config.id}>
-                        <TableCell className="font-medium">{config.customer}</TableCell>
-                        <TableCell>{config.type}</TableCell>
-                        <TableCell>{config.model}</TableCell>
-                        <TableCell className="financial-number">{config.rate}</TableCell>
-                        <TableCell>{config.effectiveDate}</TableCell>
-                        <TableCell>
-                          <Badge variant={config.status === 'Active' ? 'default' : 'secondary'}>
-                            {config.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end gap-2">
-                            <Button variant="ghost" size="icon">
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon">
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+              <ResponsiveTable
+                columns={pricingColumns}
+                data={pricingConfigs}
+                keyExtractor={(item) => item.id.toString()}
+                mobileCardTitle={(config) => (
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-sm">{config.customer}</span>
+                    <Badge variant={config.status === 'Active' ? 'default' : 'secondary'} className="text-xs">
+                      {config.status}
+                    </Badge>
+                  </div>
+                )}
+                renderCell={(config, column) => {
+                  switch (column.key) {
+                    case 'customer':
+                      return config.customer;
+                    case 'type':
+                      return config.type;
+                    case 'model':
+                      return config.model;
+                    case 'rate':
+                      return config.rate;
+                    case 'effectiveDate':
+                      return config.effectiveDate;
+                    case 'status':
+                      return (
+                        <Badge variant={config.status === 'Active' ? 'default' : 'secondary'}>
+                          {config.status}
+                        </Badge>
+                      );
+                    case 'actions':
+                      return (
+                        <div className="flex justify-end gap-1 md:gap-2">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9">
+                            <Edit className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9">
+                            <Trash2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                          </Button>
+                        </div>
+                      );
+                    default:
+                      return null;
+                  }
+                }}
+              />
             </CardContent>
           </Card>
         </TabsContent>
 
-        <TabsContent value="tsp" className="space-y-4">
+        <TabsContent value="tsp" className="space-y-3 md:space-y-4">
           <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>TSP Revenue Sharing</CardTitle>
-                  <CardDescription>Configure commission structures for TSP partners</CardDescription>
+            <CardHeader className="pb-3 md:pb-6">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="space-y-1">
+                  <CardTitle className={isMobile ? 'text-base' : 'text-lg'}>TSP Revenue Sharing</CardTitle>
+                  <CardDescription className={isMobile ? 'text-xs' : 'text-sm'}>
+                    {isMobile ? 'Commission structures' : 'Configure commission structures for TSP partners'}
+                  </CardDescription>
                 </div>
-                <Button className="bg-gradient-primary">
+                <Button className="bg-gradient-primary w-full sm:w-auto" size={isMobile ? 'default' : 'default'}>
                   <Plus className="mr-2 h-4 w-4" />
-                  New Configuration
+                  {isMobile ? 'New' : 'New Configuration'}
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-md border">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>TSP Partner</TableHead>
-                      <TableHead>Commission</TableHead>
-                      <TableHead>Tier Structure</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {tspConfigs.map((config) => (
-                      <TableRow key={config.id}>
-                        <TableCell className="font-medium">{config.tsp}</TableCell>
-                        <TableCell className="financial-number">{config.commission}</TableCell>
-                        <TableCell>{config.tier}</TableCell>
-                        <TableCell>
-                          <Badge variant="default">{config.status}</Badge>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end gap-2">
-                            <Button variant="ghost" size="icon">
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon">
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+            <CardContent className="px-3 md:px-6">
+              <ResponsiveTable
+                columns={tspColumns}
+                data={tspConfigs}
+                keyExtractor={(item) => item.id.toString()}
+                mobileCardTitle={(config) => (
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-sm">{config.tsp}</span>
+                    <Badge variant="default" className="text-xs">{config.status}</Badge>
+                  </div>
+                )}
+                renderCell={(config, column) => {
+                  switch (column.key) {
+                    case 'tsp':
+                      return config.tsp;
+                    case 'commission':
+                      return config.commission;
+                    case 'tier':
+                      return config.tier;
+                    case 'status':
+                      return <Badge variant="default">{config.status}</Badge>;
+                    case 'actions':
+                      return (
+                        <div className="flex justify-end gap-1 md:gap-2">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9">
+                            <Edit className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9">
+                            <Trash2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                          </Button>
+                        </div>
+                      );
+                    default:
+                      return null;
+                  }
+                }}
+              />
             </CardContent>
           </Card>
         </TabsContent>

@@ -7,6 +7,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppSidebar } from "@/components/app-sidebar";
 import { PageHeader } from "@/components/page-header";
+import { MobileNav } from "@/components/mobile-nav";
 import Dashboard from "./pages/Dashboard";
 import Configuration from "./pages/Configuration";
 import Settlements from "./pages/Settlements";
@@ -26,10 +27,12 @@ const App = () => (
         <BrowserRouter>
           <SidebarProvider defaultOpen={true}>
             <div className="flex min-h-screen w-full">
-              <AppSidebar />
+              <div className="hidden md:flex">
+                <AppSidebar />
+              </div>
               <div className="flex flex-1 flex-col">
                 <PageHeader />
-                <main className="flex-1">
+                <main className="flex-1 pb-16 md:pb-0">
                   <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/configuration" element={<Configuration />} />
@@ -40,6 +43,7 @@ const App = () => (
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
+                <MobileNav />
               </div>
             </div>
           </SidebarProvider>

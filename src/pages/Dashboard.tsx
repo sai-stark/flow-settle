@@ -27,6 +27,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { useIsMobile, useIsTablet } from '@/hooks/use-media-query';
+import { ResponsiveChartContainer } from '@/components/responsive-chart-container';
 
 const revenueData = [
   { month: 'Jan', revenue: 45000, expenses: 28000 },
@@ -59,83 +61,86 @@ const topCustomers = [
 ];
 
 const Dashboard = () => {
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
+
   return (
-    <div className="flex-1 space-y-6 p-6 animate-fade-in">
+    <div className="flex-1 space-y-4 p-4 animate-fade-in md:space-y-6 md:p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
-            Welcome back! Here's what's happening with your settlements today.
+          <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Dashboard</h1>
+          <p className="text-muted-foreground mt-1 text-sm md:text-base">
+            {isMobile ? "Today's overview" : "Welcome back! Here's what's happening with your settlements today."}
           </p>
         </div>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="transition-smooth hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-primary" />
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:gap-4">
+        <Card className="transition-smooth active:scale-[0.98] md:hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-xs font-medium md:text-sm">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-primary md:h-5 md:w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold financial-number">$791,000</div>
+            <div className="text-xl font-bold financial-number md:text-2xl">$791,000</div>
             <div className="flex items-center text-xs text-success mt-1">
               <ArrowUpRight className="h-3 w-3 mr-1" />
-              <span>+12.5% from last month</span>
+              <span>+12.5%{!isMobile && ' from last month'}</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Pending Settlements</CardTitle>
-            <Clock className="h-4 w-4 text-warning" />
+        <Card className="transition-smooth active:scale-[0.98] md:hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-xs font-medium md:text-sm">Pending Settlements</CardTitle>
+            <Clock className="h-4 w-4 text-warning md:h-5 md:w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold financial-number">$125,400</div>
+            <div className="text-xl font-bold financial-number md:text-2xl">$125,400</div>
             <div className="flex items-center text-xs text-muted-foreground mt-1">
-              <span>45 settlements awaiting approval</span>
+              <span>45 {!isMobile && 'settlements'} awaiting</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Active Disputes</CardTitle>
-            <AlertCircle className="h-4 w-4 text-error" />
+        <Card className="transition-smooth active:scale-[0.98] md:hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-xs font-medium md:text-sm">Active Disputes</CardTitle>
+            <AlertCircle className="h-4 w-4 text-error md:h-5 md:w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold financial-number">8</div>
+            <div className="text-xl font-bold financial-number md:text-2xl">8</div>
             <div className="flex items-center text-xs text-error mt-1">
               <ArrowUpRight className="h-3 w-3 mr-1" />
-              <span>+2 from yesterday</span>
+              <span>+2 {!isMobile && 'from yesterday'}</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">API Consumption</CardTitle>
-            <Activity className="h-4 w-4 text-primary" />
+        <Card className="transition-smooth active:scale-[0.98] md:hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+            <CardTitle className="text-xs font-medium md:text-sm">API Consumption</CardTitle>
+            <Activity className="h-4 w-4 text-primary md:h-5 md:w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold financial-number">1.2M</div>
+            <div className="text-xl font-bold financial-number md:text-2xl">1.2M</div>
             <div className="flex items-center text-xs text-muted-foreground mt-1">
-              <span>78% of monthly limit</span>
+              <span>78% {!isMobile && 'of monthly limit'}</span>
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Charts Row 1 */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Revenue Trends</CardTitle>
-            <p className="text-sm text-muted-foreground">Monthly revenue vs expenses (last 12 months)</p>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+      <div className="grid gap-3 grid-cols-1 md:gap-4 lg:grid-cols-2">
+        <ResponsiveChartContainer
+          title="Revenue Trends"
+          description={isMobile ? "Revenue vs expenses" : "Monthly revenue vs expenses (last 12 months)"}
+          mobileHeight={250}
+          desktopHeight={300}
+        >
+          <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={revenueData}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -176,16 +181,15 @@ const Dashboard = () => {
                 />
               </AreaChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
+        </ResponsiveChartContainer>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Settlement Status</CardTitle>
-            <p className="text-sm text-muted-foreground">Current settlement breakdown</p>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveChartContainer
+          title="Settlement Status"
+          description={isMobile ? "Breakdown" : "Current settlement breakdown"}
+          mobileHeight={250}
+          desktopHeight={300}
+        >
+          <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={settlementData}
@@ -210,18 +214,17 @@ const Dashboard = () => {
                 />
               </PieChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
+        </ResponsiveChartContainer>
       </div>
 
       {/* Top Customers */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Top 5 Customers by Volume</CardTitle>
-          <p className="text-sm text-muted-foreground">Highest transaction volumes this month</p>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveChartContainer
+        title="Top 5 Customers by Volume"
+        description={isMobile ? "Highest volumes" : "Highest transaction volumes this month"}
+        mobileHeight={250}
+        desktopHeight={300}
+      >
+        <ResponsiveContainer width="100%" height="100%">
             <BarChart data={topCustomers} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis type="number" className="text-xs" />
@@ -237,35 +240,38 @@ const Dashboard = () => {
               <Bar dataKey="volume" fill="hsl(var(--primary))" radius={[0, 8, 8, 0]} />
             </BarChart>
           </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      </ResponsiveChartContainer>
 
       {/* Recent Activity */}
-      <Card>
+      <Card className="transition-smooth">
         <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
-          <p className="text-sm text-muted-foreground">Latest transactions and events</p>
+          <CardTitle className={isMobile ? 'text-base' : 'text-lg'}>Recent Activity</CardTitle>
+          <p className={`text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>
+            {isMobile ? 'Latest events' : 'Latest transactions and events'}
+          </p>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             {[
-              { action: 'Settlement approved', entity: 'TSP Partner A', amount: '$15,420', time: '2 minutes ago', icon: DollarSign, color: 'text-success' },
-              { action: 'Invoice generated', entity: 'Acme Corp', amount: '$8,750', time: '15 minutes ago', icon: CreditCard, color: 'text-primary' },
-              { action: 'Dispute raised', entity: 'TechStart Inc', amount: '$3,200', time: '1 hour ago', icon: AlertCircle, color: 'text-error' },
-              { action: 'New customer added', entity: 'Global Finance', amount: '-', time: '2 hours ago', icon: Users, color: 'text-muted-foreground' },
-              { action: 'Settlement completed', entity: 'Swift Pay', amount: '$12,300', time: '3 hours ago', icon: DollarSign, color: 'text-success' },
+              { action: 'Settlement approved', entity: 'TSP Partner A', amount: '$15,420', time: '2 min ago', timeShort: '2m', icon: DollarSign, color: 'text-success' },
+              { action: 'Invoice generated', entity: 'Acme Corp', amount: '$8,750', time: '15 min ago', timeShort: '15m', icon: CreditCard, color: 'text-primary' },
+              { action: 'Dispute raised', entity: 'TechStart Inc', amount: '$3,200', time: '1 hour ago', timeShort: '1h', icon: AlertCircle, color: 'text-error' },
+              { action: 'New customer added', entity: 'Global Finance', amount: '-', time: '2 hours ago', timeShort: '2h', icon: Users, color: 'text-muted-foreground' },
+              { action: 'Settlement completed', entity: 'Swift Pay', amount: '$12,300', time: '3 hours ago', timeShort: '3h', icon: DollarSign, color: 'text-success' },
             ].map((activity, idx) => (
-              <div key={idx} className="flex items-center gap-4 pb-4 last:pb-0 border-b last:border-0">
-                <div className={`rounded-full p-2 bg-muted ${activity.color}`}>
-                  <activity.icon className="h-4 w-4" />
+              <div key={idx} className="flex items-center gap-3 pb-3 last:pb-0 border-b last:border-0 md:gap-4 md:pb-4">
+                <div className={`rounded-full p-1.5 bg-muted ${activity.color} md:p-2`}>
+                  <activity.icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">{activity.action}</p>
-                  <p className="text-xs text-muted-foreground">{activity.entity}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium truncate md:text-sm">{activity.action}</p>
+                  <p className="text-[10px] text-muted-foreground truncate md:text-xs">{activity.entity}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-semibold financial-number">{activity.amount}</p>
-                  <p className="text-xs text-muted-foreground">{activity.time}</p>
+                <div className="text-right shrink-0">
+                  <p className="text-xs font-semibold financial-number md:text-sm">{activity.amount}</p>
+                  <p className="text-[10px] text-muted-foreground md:text-xs">
+                    {isMobile ? activity.timeShort : activity.time}
+                  </p>
                 </div>
               </div>
             ))}
