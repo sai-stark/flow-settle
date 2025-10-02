@@ -4,32 +4,32 @@ const getThemeOptions = (mode: 'light' | 'dark'): ThemeOptions => ({
   palette: {
     mode,
     primary: {
-      main: mode === 'light' ? 'hsl(210, 100%, 40%)' : 'hsl(210, 100%, 50%)',
-      light: mode === 'light' ? 'hsl(210, 100%, 50%)' : 'hsl(210, 100%, 60%)',
-      dark: mode === 'light' ? 'hsl(210, 100%, 30%)' : 'hsl(210, 100%, 40%)',
+      main: mode === 'light' ? '#6366f1' : '#818cf8',
+      light: mode === 'light' ? '#818cf8' : '#a5b4fc',
+      dark: mode === 'light' ? '#4f46e5' : '#6366f1',
     },
     success: {
-      main: 'hsl(142, 71%, 45%)',
-      light: 'hsl(142, 71%, 55%)',
-      dark: 'hsl(142, 71%, 35%)',
+      main: '#10b981',
+      light: '#34d399',
+      dark: '#059669',
     },
     warning: {
-      main: 'hsl(38, 92%, 50%)',
-      light: 'hsl(38, 92%, 60%)',
-      dark: 'hsl(38, 92%, 40%)',
+      main: '#f59e0b',
+      light: '#fbbf24',
+      dark: '#d97706',
     },
     error: {
-      main: 'hsl(0, 84%, 60%)',
-      light: 'hsl(0, 84%, 70%)',
-      dark: 'hsl(0, 84%, 50%)',
+      main: '#ef4444',
+      light: '#f87171',
+      dark: '#dc2626',
     },
     background: {
-      default: mode === 'light' ? 'hsl(0, 0%, 100%)' : 'hsl(222, 47%, 11%)',
-      paper: mode === 'light' ? 'hsl(0, 0%, 100%)' : 'hsl(217, 33%, 17%)',
+      default: mode === 'light' ? '#f8fafc' : '#0f172a',
+      paper: mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(30, 41, 59, 0.7)',
     },
     text: {
-      primary: mode === 'light' ? 'hsl(222, 47%, 11%)' : 'hsl(213, 31%, 91%)',
-      secondary: mode === 'light' ? 'hsl(215, 16%, 47%)' : 'hsl(215, 20%, 65%)',
+      primary: mode === 'light' ? '#0f172a' : '#f1f5f9',
+      secondary: mode === 'light' ? '#64748b' : '#94a3b8',
     },
   },
   typography: {
@@ -81,16 +81,33 @@ const getThemeOptions = (mode: 'light' | 'dark'): ThemeOptions => ({
       styleOverrides: {
         root: {
           textTransform: 'none',
-          fontWeight: 500,
+          fontWeight: 600,
+          borderRadius: 12,
+          padding: '10px 24px',
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: mode === 'light' 
+              ? '0 10px 25px -5px rgba(99, 102, 241, 0.3)'
+              : '0 10px 25px -5px rgba(129, 140, 248, 0.3)',
+          },
         },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          boxShadow: mode === 'light' 
-            ? '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
-            : '0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2)',
+          borderRadius: 20,
+          backdropFilter: 'blur(20px)',
+          background: mode === 'light'
+            ? 'rgba(255, 255, 255, 0.7)'
+            : 'rgba(30, 41, 59, 0.7)',
+          border: mode === 'light' 
+            ? '1px solid rgba(255, 255, 255, 0.8)'
+            : '1px solid rgba(71, 85, 105, 0.3)',
+          boxShadow: mode === 'light'
+            ? '0 8px 32px 0 rgba(31, 38, 135, 0.15)'
+            : '0 8px 32px 0 rgba(0, 0, 0, 0.4)',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         },
       },
     },
@@ -98,6 +115,31 @@ const getThemeOptions = (mode: 'light' | 'dark'): ThemeOptions => ({
       styleOverrides: {
         root: {
           backgroundImage: 'none',
+          backdropFilter: 'blur(20px)',
+          borderRadius: 16,
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backdropFilter: 'blur(20px)',
+          background: mode === 'light'
+            ? 'rgba(255, 255, 255, 0.8)'
+            : 'rgba(15, 23, 42, 0.8)',
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backdropFilter: 'blur(20px)',
+          background: mode === 'light'
+            ? 'rgba(255, 255, 255, 0.8)'
+            : 'rgba(15, 23, 42, 0.8)',
+          borderRight: mode === 'light'
+            ? '1px solid rgba(226, 232, 240, 0.8)'
+            : '1px solid rgba(71, 85, 105, 0.3)',
         },
       },
     },

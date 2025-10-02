@@ -73,12 +73,44 @@ const recentActivity = [
 
 const Dashboard = () => {
   return (
-    <Box sx={{ p: { xs: 2, md: 3 } }}>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="h4" component="h1" fontWeight={700} gutterBottom>
+    <Box sx={{ 
+      p: { xs: 2, md: 3 },
+      minHeight: '100vh',
+      background: (theme) => theme.palette.mode === 'light'
+        ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        : 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+    }}>
+      <Box sx={{ 
+        mb: 3,
+        p: 3,
+        borderRadius: 3,
+        background: (theme) => theme.palette.mode === 'light'
+          ? 'rgba(255, 255, 255, 0.2)'
+          : 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(10px)',
+        border: (theme) => theme.palette.mode === 'light'
+          ? '1px solid rgba(255, 255, 255, 0.3)'
+          : '1px solid rgba(255, 255, 255, 0.1)',
+      }}>
+        <Typography 
+          variant="h4" 
+          component="h1" 
+          fontWeight={700} 
+          gutterBottom
+          sx={{ 
+            color: '#fff',
+            textShadow: '0 2px 10px rgba(0,0,0,0.2)'
+          }}
+        >
           Dashboard
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography 
+          variant="body2" 
+          sx={{ 
+            color: 'rgba(255, 255, 255, 0.9)',
+            textShadow: '0 1px 3px rgba(0,0,0,0.2)'
+          }}
+        >
           Welcome back! Here's what's happening with your settlements today.
         </Typography>
       </Box>
@@ -90,56 +122,81 @@ const Dashboard = () => {
         gap: { xs: 2, md: 3 },
         mb: 3
       }}>
-        <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
+        <Card sx={{ 
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+          '&:hover': { 
+            transform: 'translateY(-4px)',
+            boxShadow: '0 12px 40px -5px rgba(99, 102, 241, 0.4)'
+          } 
+        }}>
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <Box>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
+                <Typography variant="body2" color="text.secondary" gutterBottom fontWeight={600}>
                   Total Revenue
                 </Typography>
-                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
+                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                   $791,000
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                   <ArrowUpward sx={{ fontSize: 16, color: 'success.main', mr: 0.5 }} />
-                  <Typography variant="caption" color="success.main">
+                  <Typography variant="caption" color="success.main" fontWeight={600}>
                     +12.5% from last month
                   </Typography>
                 </Box>
               </Box>
-              <Avatar sx={{ bgcolor: 'primary.main' }}>
+              <Avatar sx={{ 
+                bgcolor: 'primary.main',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                boxShadow: '0 8px 16px rgba(99, 102, 241, 0.3)'
+              }}>
                 <AttachMoney />
               </Avatar>
             </Box>
           </CardContent>
         </Card>
 
-        <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
+        <Card sx={{ 
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+          '&:hover': { 
+            transform: 'translateY(-4px)',
+            boxShadow: '0 12px 40px -5px rgba(245, 158, 11, 0.4)'
+          } 
+        }}>
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <Box>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
+                <Typography variant="body2" color="text.secondary" gutterBottom fontWeight={600}>
                   Pending Settlements
                 </Typography>
                 <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
                   $125,400
                 </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }} fontWeight={600}>
                   45 settlements awaiting
                 </Typography>
               </Box>
-              <Avatar sx={{ bgcolor: 'warning.main' }}>
+              <Avatar sx={{ 
+                bgcolor: 'warning.main',
+                boxShadow: '0 8px 16px rgba(245, 158, 11, 0.3)'
+              }}>
                 <Schedule />
               </Avatar>
             </Box>
           </CardContent>
         </Card>
 
-        <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
+        <Card sx={{ 
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+          '&:hover': { 
+            transform: 'translateY(-4px)',
+            boxShadow: '0 12px 40px -5px rgba(239, 68, 68, 0.4)'
+          } 
+        }}>
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <Box>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
+                <Typography variant="body2" color="text.secondary" gutterBottom fontWeight={600}>
                   Active Disputes
                 </Typography>
                 <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
@@ -147,33 +204,46 @@ const Dashboard = () => {
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                   <ArrowUpward sx={{ fontSize: 16, color: 'error.main', mr: 0.5 }} />
-                  <Typography variant="caption" color="error.main">
+                  <Typography variant="caption" color="error.main" fontWeight={600}>
                     +2 from yesterday
                   </Typography>
                 </Box>
               </Box>
-              <Avatar sx={{ bgcolor: 'error.main' }}>
+              <Avatar sx={{ 
+                bgcolor: 'error.main',
+                boxShadow: '0 8px 16px rgba(239, 68, 68, 0.3)'
+              }}>
                 <Warning />
               </Avatar>
             </Box>
           </CardContent>
         </Card>
 
-        <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
+        <Card sx={{ 
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+          '&:hover': { 
+            transform: 'translateY(-4px)',
+            boxShadow: '0 12px 40px -5px rgba(99, 102, 241, 0.4)'
+          } 
+        }}>
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <Box>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
+                <Typography variant="body2" color="text.secondary" gutterBottom fontWeight={600}>
                   API Consumption
                 </Typography>
                 <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
                   1.2M
                 </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }} fontWeight={600}>
                   78% of monthly limit
                 </Typography>
               </Box>
-              <Avatar sx={{ bgcolor: 'primary.main' }}>
+              <Avatar sx={{ 
+                bgcolor: 'primary.main',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                boxShadow: '0 8px 16px rgba(99, 102, 241, 0.3)'
+              }}>
                 <Analytics />
               </Avatar>
             </Box>

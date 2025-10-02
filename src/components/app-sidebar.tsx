@@ -58,6 +58,10 @@ export function AppSidebar() {
             duration: theme.transitions.duration.enteringScreen,
           }),
           overflowX: 'hidden',
+          backdropFilter: 'blur(20px)',
+          borderRight: (theme) => theme.palette.mode === 'light'
+            ? '1px solid rgba(226, 232, 240, 0.8)'
+            : '1px solid rgba(71, 85, 105, 0.3)',
         },
       }}
     >
