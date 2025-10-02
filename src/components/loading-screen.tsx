@@ -1,24 +1,34 @@
-import { DollarSign } from 'lucide-react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { AccountBalance } from '@mui/icons-material';
 
 export function LoadingScreen() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-4">
-        <div className="relative">
-          <div className="absolute inset-0 animate-ping">
-            <DollarSign className="h-12 w-12 text-primary opacity-75" />
-          </div>
-          <div className="animate-coin-flip">
-            <DollarSign className="h-12 w-12 text-primary" />
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <h3 className="text-lg font-semibold text-foreground">Loading...</h3>
-          <div className="h-1 w-48 overflow-hidden rounded-full bg-muted">
-            <div className="animate-shimmer h-full w-full" />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        gap: 3,
+      }}
+    >
+      <Box sx={{ position: 'relative' }}>
+        <CircularProgress size={60} thickness={4} />
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <AccountBalance sx={{ fontSize: 30, color: 'primary.main' }} />
+        </Box>
+      </Box>
+      <Typography variant="h6" color="text.secondary">
+        Loading...
+      </Typography>
+    </Box>
   );
 }

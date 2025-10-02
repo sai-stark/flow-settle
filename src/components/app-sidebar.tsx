@@ -1,97 +1,133 @@
-import { 
-  LayoutDashboard, 
-  Settings, 
-  FileText, 
-  Wallet, 
-  MessageSquare,
-  Users,
-  DollarSign
-} from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarHeader,
-  SidebarFooter,
-} from '@/components/ui/sidebar';
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  Typography,
+  Divider,
+  Avatar,
+  IconButton,
+} from '@mui/material';
+import {
+  Dashboard,
+  Settings,
+  Receipt,
+  AccountBalance,
+  Gavel,
+  ChevronLeft,
+  ChevronRight,
+} from '@mui/icons-material';
 import { useAuthStore } from '@/stores/auth-store';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
-const mainItems = [
-  { title: 'Dashboard', url: '/', icon: LayoutDashboard },
-  { title: 'Configuration', url: '/configuration', icon: Settings },
-  { title: 'TSP Settlement', url: '/settlements', icon: DollarSign },
-  { title: 'Invoices', url: '/invoices', icon: FileText },
-  { title: 'Balance', url: '/balance', icon: Wallet },
-  { title: 'Disputes', url: '/disputes', icon: MessageSquare },
+const drawerWidth = 240;
+const drawerWidthCollapsed = 64;
+
+const menuItems = [
+  { title: 'Dashboard', path: '/', icon: Dashboard },
+  { title: 'Configuration', path: '/configuration', icon: Settings },
+  { title: 'Settlements', path: '/settlements', icon: AccountBalance },
+  { title: 'Invoices', path: '/invoices', icon: Receipt },
+  { title: 'Balance', path: '/balance', icon: AccountBalance },
+  { title: 'Disputes', path: '/disputes', icon: Gavel },
 ];
 
 export function AppSidebar() {
+  const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
 
+  const currentWidth = collapsed ? drawerWidthCollapsed : drawerWidth;
+
   return (
-    <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b border-sidebar-border p-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <DollarSign className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold text-sidebar-foreground">BillSettle</span>
-            <span className="text-xs text-sidebar-foreground/60">Settlement Platform</span>
-          </div>
-        </div>
-      </SidebarHeader>
-
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {mainItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink 
-                      to={item.url}
-                      end={item.url === '/'}
-                      className={({ isActive }) =>
-                        isActive
-                          ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                          : 'hover:bg-sidebar-accent/50'
-                      }
-                    >
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-
-      <SidebarFooter className="border-t border-sidebar-border p-4">
-        <div className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-              {user?.name.split(' ').map(n => n[0]).join('') || 'U'}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-medium text-sidebar-foreground">{user?.name}</span>
-            <span className="text-xs text-sidebar-foreground/60 capitalize">
-              {user?.role.replace('-', ' ')}
-            </span>
-          </div>
-        </div>
-      </SidebarFooter>
-    </Sidebar>
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: currentWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: currentWidth,
+          boxSizing: 'border-box',
+          transition: (theme) => theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+          overflowX: 'hidden',
+        },
+      }}
+    >
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'space-between' }}>
+          {!collapsed && (
+            <Typography variant="h6" noWrap sx={{ fontWeight: 700, color: 'primary.main' }}>
+              BillSettle
+            </Typography>
+          )}
+          <IconButton onClick={() => setCollapsed(!collapsed)} size="small">
+            {collapsed ? <ChevronRight /> : <ChevronLeft />}
+          </IconButton>
+        </Box>
+        
+        <Divider />
+        
+        <List sx={{ flex: 1, py: 1 }}>
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            
+            return (
+              <ListItem key={item.path} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  selected={isActive}
+                  onClick={() => navigate(item.path)}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: collapsed ? 'center' : 'initial',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: collapsed ? 0 : 3,
+                      justifyContent: 'center',
+                      color: isActive ? 'primary.main' : 'inherit',
+                    }}
+                  >
+                    <Icon />
+                  </ListItemIcon>
+                  {!collapsed && <ListItemText primary={item.title} />}
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+        </List>
+        
+        <Divider />
+        
+        <Box sx={{ p: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: collapsed ? 0 : 2, justifyContent: collapsed ? 'center' : 'flex-start' }}>
+            <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
+              {user?.name?.charAt(0) || 'U'}
+            </Avatar>
+            {!collapsed && (
+              <Box sx={{ overflow: 'hidden' }}>
+                <Typography variant="body2" noWrap sx={{ fontWeight: 600 }}>
+                  {user?.name || 'User'}
+                </Typography>
+                <Typography variant="caption" noWrap color="text.secondary">
+                  {user?.role || 'Role'}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        </Box>
+      </Box>
+    </Drawer>
   );
 }

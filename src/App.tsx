@@ -1,10 +1,8 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Box } from "@mui/material";
+import { SnackbarProvider } from 'notistack';
 import { AppSidebar } from "@/components/app-sidebar";
 import { PageHeader } from "@/components/page-header";
 import { MobileNav } from "@/components/mobile-nav";
@@ -21,34 +19,30 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner position="top-center" />
+      <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
         <BrowserRouter>
-          <SidebarProvider defaultOpen={true}>
-            <div className="flex min-h-screen w-full">
-              <div className="hidden md:flex">
-                <AppSidebar />
-              </div>
-              <div className="flex flex-1 flex-col">
-                <PageHeader />
-                <main className="flex-1 pb-16 md:pb-0">
-                  <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/configuration" element={<Configuration />} />
-                    <Route path="/settlements" element={<Settlements />} />
-                    <Route path="/invoices" element={<Invoices />} />
-                    <Route path="/balance" element={<Balance />} />
-                    <Route path="/disputes" element={<Disputes />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
-                <MobileNav />
-              </div>
-            </div>
-          </SidebarProvider>
+          <Box sx={{ display: 'flex', minHeight: '100vh', width: '100%' }}>
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <AppSidebar />
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <PageHeader />
+              <Box component="main" sx={{ flex: 1, pb: { xs: 8, md: 0 } }}>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/configuration" element={<Configuration />} />
+                  <Route path="/settlements" element={<Settlements />} />
+                  <Route path="/invoices" element={<Invoices />} />
+                  <Route path="/balance" element={<Balance />} />
+                  <Route path="/disputes" element={<Disputes />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Box>
+              <MobileNav />
+            </Box>
+          </Box>
         </BrowserRouter>
-      </TooltipProvider>
+      </SnackbarProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );
