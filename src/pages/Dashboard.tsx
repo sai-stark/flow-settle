@@ -1,5 +1,4 @@
 import { 
-  Grid,
   Card, 
   CardContent, 
   Typography, 
@@ -9,6 +8,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
+  Stack,
 } from '@mui/material';
 import { 
   TrendingUp, 
@@ -84,189 +84,183 @@ const Dashboard = () => {
       </Box>
 
       {/* KPI Cards */}
-      <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mb: 3 }}>
-        <Grid xs={12} sm={6} lg={3}>
-          <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Total Revenue
+      <Box sx={{ 
+        display: 'grid', 
+        gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' },
+        gap: { xs: 2, md: 3 },
+        mb: 3
+      }}>
+        <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
+          <CardContent>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <Box>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Total Revenue
+                </Typography>
+                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
+                  $791,000
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                  <ArrowUpward sx={{ fontSize: 16, color: 'success.main', mr: 0.5 }} />
+                  <Typography variant="caption" color="success.main">
+                    +12.5% from last month
                   </Typography>
-                  <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
-                    $791,000
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                    <ArrowUpward sx={{ fontSize: 16, color: 'success.main', mr: 0.5 }} />
-                    <Typography variant="caption" color="success.main">
-                      +12.5% from last month
-                    </Typography>
-                  </Box>
                 </Box>
-                <Avatar sx={{ bgcolor: 'primary.main' }}>
-                  <AttachMoney />
-                </Avatar>
               </Box>
-            </CardContent>
-          </Card>
-        </Grid>
+              <Avatar sx={{ bgcolor: 'primary.main' }}>
+                <AttachMoney />
+              </Avatar>
+            </Box>
+          </CardContent>
+        </Card>
 
-        <Grid xs={12} sm={6} lg={3}>
-          <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Pending Settlements
-                  </Typography>
-                  <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
-                    $125,400
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                    45 settlements awaiting
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'warning.main' }}>
-                  <Schedule />
-                </Avatar>
+        <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
+          <CardContent>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <Box>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Pending Settlements
+                </Typography>
+                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
+                  $125,400
+                </Typography>
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                  45 settlements awaiting
+                </Typography>
               </Box>
-            </CardContent>
-          </Card>
-        </Grid>
+              <Avatar sx={{ bgcolor: 'warning.main' }}>
+                <Schedule />
+              </Avatar>
+            </Box>
+          </CardContent>
+        </Card>
 
-        <Grid xs={12} sm={6} lg={3}>
-          <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Active Disputes
+        <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
+          <CardContent>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <Box>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Active Disputes
+                </Typography>
+                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
+                  8
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                  <ArrowUpward sx={{ fontSize: 16, color: 'error.main', mr: 0.5 }} />
+                  <Typography variant="caption" color="error.main">
+                    +2 from yesterday
                   </Typography>
-                  <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
-                    8
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                    <ArrowUpward sx={{ fontSize: 16, color: 'error.main', mr: 0.5 }} />
-                    <Typography variant="caption" color="error.main">
-                      +2 from yesterday
-                    </Typography>
-                  </Box>
                 </Box>
-                <Avatar sx={{ bgcolor: 'error.main' }}>
-                  <Warning />
-                </Avatar>
               </Box>
-            </CardContent>
-          </Card>
-        </Grid>
+              <Avatar sx={{ bgcolor: 'error.main' }}>
+                <Warning />
+              </Avatar>
+            </Box>
+          </CardContent>
+        </Card>
 
-        <Grid xs={12} sm={6} lg={3}>
-          <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <Box>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    API Consumption
-                  </Typography>
-                  <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
-                    1.2M
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                    78% of monthly limit
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'primary.main' }}>
-                  <Analytics />
-                </Avatar>
+        <Card sx={{ transition: 'all 0.3s', '&:hover': { boxShadow: 4 } }}>
+          <CardContent>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <Box>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  API Consumption
+                </Typography>
+                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
+                  1.2M
+                </Typography>
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                  78% of monthly limit
+                </Typography>
               </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+              <Avatar sx={{ bgcolor: 'primary.main' }}>
+                <Analytics />
+              </Avatar>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
 
       {/* Charts Row */}
-      <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mb: 3 }}>
-        <Grid xs={12} lg={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Revenue Trends
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Monthly revenue vs expenses (last 6 months)
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={revenueData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Area type="monotone" dataKey="revenue" stroke="#0066CC" fill="#0066CC" fillOpacity={0.3} name="Revenue" />
-                  <Area type="monotone" dataKey="expenses" stroke="#EF4444" fill="#EF4444" fillOpacity={0.3} name="Expenses" />
-                </AreaChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
+      <Box sx={{ 
+        display: 'grid', 
+        gridTemplateColumns: { xs: '1fr', lg: 'repeat(2, 1fr)' },
+        gap: { xs: 2, md: 3 },
+        mb: 3
+      }}>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Revenue Trends
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              Monthly revenue vs expenses (last 6 months)
+            </Typography>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={revenueData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Area type="monotone" dataKey="revenue" stroke="#0066CC" fill="#0066CC" fillOpacity={0.3} name="Revenue" />
+                <Area type="monotone" dataKey="expenses" stroke="#EF4444" fill="#EF4444" fillOpacity={0.3} name="Expenses" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
 
-        <Grid xs={12} lg={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Settlement Status
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Current settlement breakdown
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={settlementData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {settlementData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Settlement Status
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              Current settlement breakdown
+            </Typography>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={settlementData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {settlementData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </Box>
 
       {/* Top Customers */}
-      <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mb: 3 }}>
-        <Grid xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Top 5 Customers by Volume
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Highest transaction volumes this month
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={topCustomers} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis dataKey="name" type="category" width={120} />
-                  <Tooltip formatter={(value: number) => `$${value.toLocaleString()}`} />
-                  <Bar dataKey="volume" fill="#0066CC" radius={[0, 8, 8, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            Top 5 Customers by Volume
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            Highest transaction volumes this month
+          </Typography>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={topCustomers} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" />
+              <YAxis dataKey="name" type="category" width={120} />
+              <Tooltip formatter={(value: number) => `$${value.toLocaleString()}`} />
+              <Bar dataKey="volume" fill="#0066CC" radius={[0, 8, 8, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
 
       {/* Recent Activity */}
       <Card>
