@@ -8,11 +8,6 @@ export function PageHeader() {
       position="sticky" 
       color="default" 
       elevation={0}
-      sx={{ 
-        borderBottom: 1, 
-        borderColor: 'divider',
-        bgcolor: 'background.paper',
-      }}
     >
       <Toolbar>
         <IconButton

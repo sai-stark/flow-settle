@@ -8,7 +8,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
-  Stack,
+  Chip,
 } from '@mui/material';
 import { 
   TrendingUp, 
@@ -73,44 +73,12 @@ const recentActivity = [
 
 const Dashboard = () => {
   return (
-    <Box sx={{ 
-      p: { xs: 2, md: 3 },
-      minHeight: '100vh',
-      background: (theme) => theme.palette.mode === 'light'
-        ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-        : 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
-    }}>
-      <Box sx={{ 
-        mb: 3,
-        p: 3,
-        borderRadius: 3,
-        background: (theme) => theme.palette.mode === 'light'
-          ? 'rgba(255, 255, 255, 0.2)'
-          : 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(10px)',
-        border: (theme) => theme.palette.mode === 'light'
-          ? '1px solid rgba(255, 255, 255, 0.3)'
-          : '1px solid rgba(255, 255, 255, 0.1)',
-      }}>
-        <Typography 
-          variant="h4" 
-          component="h1" 
-          fontWeight={700} 
-          gutterBottom
-          sx={{ 
-            color: '#fff',
-            textShadow: '0 2px 10px rgba(0,0,0,0.2)'
-          }}
-        >
+    <Box sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+      <Box sx={{ mb: 5 }}>
+        <Typography variant="h3" sx={{ mb: 0.5, fontWeight: 600 }}>
           Dashboard
         </Typography>
-        <Typography 
-          variant="body2" 
-          sx={{ 
-            color: 'rgba(255, 255, 255, 0.9)',
-            textShadow: '0 1px 3px rgba(0,0,0,0.2)'
-          }}
-        >
+        <Typography variant="body1" color="text.secondary">
           Welcome back! Here's what's happening with your settlements today.
         </Typography>
       </Box>
@@ -119,134 +87,74 @@ const Dashboard = () => {
       <Box sx={{ 
         display: 'grid', 
         gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' },
-        gap: { xs: 2, md: 3 },
-        mb: 3
+        gap: 2.5,
+        mb: 4
       }}>
-        <Card sx={{ 
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-          '&:hover': { 
-            transform: 'translateY(-4px)',
-            boxShadow: '0 12px 40px -5px rgba(99, 102, 241, 0.4)'
-          } 
-        }}>
-          <CardContent>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <Box>
-                <Typography variant="body2" color="text.secondary" gutterBottom fontWeight={600}>
-                  Total Revenue
-                </Typography>
-                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                  $791,000
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                  <ArrowUpward sx={{ fontSize: 16, color: 'success.main', mr: 0.5 }} />
-                  <Typography variant="caption" color="success.main" fontWeight={600}>
-                    +12.5% from last month
-                  </Typography>
-                </Box>
+        <Card>
+          <CardContent sx={{ p: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2.5 }}>
+              <Box sx={{ p: 1.25, borderRadius: 1.5, bgcolor: 'primary.main', color: 'white', display: 'flex' }}>
+                <AttachMoney sx={{ fontSize: 20 }} />
               </Box>
-              <Avatar sx={{ 
-                bgcolor: 'primary.main',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                boxShadow: '0 8px 16px rgba(99, 102, 241, 0.3)'
-              }}>
-                <AttachMoney />
-              </Avatar>
+              <Chip label="+12.5%" size="small" sx={{ bgcolor: 'rgba(0, 217, 36, 0.1)', color: 'success.main', fontWeight: 500, border: 'none' }} />
             </Box>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5, fontSize: '0.8125rem' }}>
+              Total Revenue
+            </Typography>
+            <Typography variant="h4" sx={{ fontWeight: 600, letterSpacing: '-0.02em' }}>
+              $791,000
+            </Typography>
           </CardContent>
         </Card>
 
-        <Card sx={{ 
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-          '&:hover': { 
-            transform: 'translateY(-4px)',
-            boxShadow: '0 12px 40px -5px rgba(245, 158, 11, 0.4)'
-          } 
-        }}>
-          <CardContent>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <Box>
-                <Typography variant="body2" color="text.secondary" gutterBottom fontWeight={600}>
-                  Pending Settlements
-                </Typography>
-                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
-                  $125,400
-                </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }} fontWeight={600}>
-                  45 settlements awaiting
-                </Typography>
+        <Card>
+          <CardContent sx={{ p: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2.5 }}>
+              <Box sx={{ p: 1.25, borderRadius: 1.5, bgcolor: 'warning.main', color: 'white', display: 'flex' }}>
+                <Schedule sx={{ fontSize: 20 }} />
               </Box>
-              <Avatar sx={{ 
-                bgcolor: 'warning.main',
-                boxShadow: '0 8px 16px rgba(245, 158, 11, 0.3)'
-              }}>
-                <Schedule />
-              </Avatar>
+              <Chip label="45 pending" size="small" sx={{ bgcolor: 'rgba(255, 192, 67, 0.1)', color: 'warning.main', fontWeight: 500, border: 'none' }} />
             </Box>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5, fontSize: '0.8125rem' }}>
+              Pending Settlements
+            </Typography>
+            <Typography variant="h4" sx={{ fontWeight: 600, letterSpacing: '-0.02em' }}>
+              $125,400
+            </Typography>
           </CardContent>
         </Card>
 
-        <Card sx={{ 
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-          '&:hover': { 
-            transform: 'translateY(-4px)',
-            boxShadow: '0 12px 40px -5px rgba(239, 68, 68, 0.4)'
-          } 
-        }}>
-          <CardContent>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <Box>
-                <Typography variant="body2" color="text.secondary" gutterBottom fontWeight={600}>
-                  Active Disputes
-                </Typography>
-                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
-                  8
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                  <ArrowUpward sx={{ fontSize: 16, color: 'error.main', mr: 0.5 }} />
-                  <Typography variant="caption" color="error.main" fontWeight={600}>
-                    +2 from yesterday
-                  </Typography>
-                </Box>
+        <Card>
+          <CardContent sx={{ p: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2.5 }}>
+              <Box sx={{ p: 1.25, borderRadius: 1.5, bgcolor: 'error.main', color: 'white', display: 'flex' }}>
+                <Warning sx={{ fontSize: 20 }} />
               </Box>
-              <Avatar sx={{ 
-                bgcolor: 'error.main',
-                boxShadow: '0 8px 16px rgba(239, 68, 68, 0.3)'
-              }}>
-                <Warning />
-              </Avatar>
+              <Chip label="+2 today" size="small" sx={{ bgcolor: 'rgba(223, 27, 65, 0.1)', color: 'error.main', fontWeight: 500, border: 'none' }} />
             </Box>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5, fontSize: '0.8125rem' }}>
+              Active Disputes
+            </Typography>
+            <Typography variant="h4" sx={{ fontWeight: 600, letterSpacing: '-0.02em' }}>
+              8
+            </Typography>
           </CardContent>
         </Card>
 
-        <Card sx={{ 
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-          '&:hover': { 
-            transform: 'translateY(-4px)',
-            boxShadow: '0 12px 40px -5px rgba(99, 102, 241, 0.4)'
-          } 
-        }}>
-          <CardContent>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <Box>
-                <Typography variant="body2" color="text.secondary" gutterBottom fontWeight={600}>
-                  API Consumption
-                </Typography>
-                <Typography variant="h4" fontWeight={700} sx={{ fontVariantNumeric: 'tabular-nums' }}>
-                  1.2M
-                </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }} fontWeight={600}>
-                  78% of monthly limit
-                </Typography>
+        <Card>
+          <CardContent sx={{ p: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2.5 }}>
+              <Box sx={{ p: 1.25, borderRadius: 1.5, bgcolor: 'primary.main', color: 'white', display: 'flex' }}>
+                <Analytics sx={{ fontSize: 20 }} />
               </Box>
-              <Avatar sx={{ 
-                bgcolor: 'primary.main',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                boxShadow: '0 8px 16px rgba(99, 102, 241, 0.3)'
-              }}>
-                <Analytics />
-              </Avatar>
+              <Chip label="78%" size="small" sx={{ bgcolor: 'rgba(99, 91, 255, 0.1)', color: 'primary.main', fontWeight: 500, border: 'none' }} />
             </Box>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5, fontSize: '0.8125rem' }}>
+              API Consumption
+            </Typography>
+            <Typography variant="h4" sx={{ fontWeight: 600, letterSpacing: '-0.02em' }}>
+              1.2M
+            </Typography>
           </CardContent>
         </Card>
       </Box>
@@ -255,37 +163,36 @@ const Dashboard = () => {
       <Box sx={{ 
         display: 'grid', 
         gridTemplateColumns: { xs: '1fr', lg: 'repeat(2, 1fr)' },
-        gap: { xs: 2, md: 3 },
-        mb: 3
+        gap: 2.5,
+        mb: 4
       }}>
         <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
+          <CardContent sx={{ p: 3 }}>
+            <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>
               Revenue Trends
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontSize: '0.8125rem' }}>
               Monthly revenue vs expenses (last 6 months)
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
               <AreaChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Area type="monotone" dataKey="revenue" stroke="#0066CC" fill="#0066CC" fillOpacity={0.3} name="Revenue" />
-                <Area type="monotone" dataKey="expenses" stroke="#EF4444" fill="#EF4444" fillOpacity={0.3} name="Expenses" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E3E8EE" vertical={false} />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} style={{ fontSize: '0.8125rem', fill: '#425466' }} />
+                <YAxis axisLine={false} tickLine={false} style={{ fontSize: '0.8125rem', fill: '#425466' }} />
+                <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E3E8EE', boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11)' }} />
+                <Area type="monotone" dataKey="revenue" stroke="#635BFF" fill="#635BFF" fillOpacity={0.1} strokeWidth={2} name="Revenue" />
+                <Area type="monotone" dataKey="expenses" stroke="#DF1B41" fill="#DF1B41" fillOpacity={0.1} strokeWidth={2} name="Expenses" />
               </AreaChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
+          <CardContent sx={{ p: 3 }}>
+            <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>
               Settlement Status
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontSize: '0.8125rem' }}>
               Current settlement breakdown
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
@@ -296,15 +203,16 @@ const Dashboard = () => {
                   cy="50%"
                   labelLine={false}
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
+                  outerRadius={100}
                   fill="#8884d8"
                   dataKey="value"
+                  strokeWidth={0}
                 >
                   {settlementData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E3E8EE', boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11)' }} />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
@@ -312,21 +220,21 @@ const Dashboard = () => {
       </Box>
 
       {/* Top Customers */}
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
+      <Card sx={{ mb: 2.5 }}>
+        <CardContent sx={{ p: 3 }}>
+          <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>
             Top 5 Customers by Volume
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontSize: '0.8125rem' }}>
             Highest transaction volumes this month
           </Typography>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={topCustomers} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" />
-              <YAxis dataKey="name" type="category" width={120} />
-              <Tooltip formatter={(value: number) => `$${value.toLocaleString()}`} />
-              <Bar dataKey="volume" fill="#0066CC" radius={[0, 8, 8, 0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E3E8EE" horizontal={false} />
+              <XAxis type="number" axisLine={false} tickLine={false} style={{ fontSize: '0.8125rem', fill: '#425466' }} />
+              <YAxis dataKey="name" type="category" width={120} axisLine={false} tickLine={false} style={{ fontSize: '0.8125rem', fill: '#425466' }} />
+              <Tooltip formatter={(value: number) => `$${value.toLocaleString()}`} contentStyle={{ borderRadius: 8, border: '1px solid #E3E8EE', boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11)' }} />
+              <Bar dataKey="volume" fill="#635BFF" radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
@@ -334,32 +242,50 @@ const Dashboard = () => {
 
       {/* Recent Activity */}
       <Card>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
+        <CardContent sx={{ p: 3 }}>
+          <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>
             Recent Activity
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontSize: '0.8125rem' }}>
             Latest transactions and events
           </Typography>
-          <List>
+          <List sx={{ p: 0 }}>
             {recentActivity.map((activity, idx) => {
               const IconComponent = activity.icon;
               return (
-                <ListItem key={idx} divider={idx < recentActivity.length - 1}>
+                <ListItem 
+                  key={idx} 
+                  divider={idx < recentActivity.length - 1}
+                  sx={{ 
+                    px: 0, 
+                    py: 2,
+                    '&:hover': { bgcolor: 'rgba(99, 91, 255, 0.03)' },
+                    transition: 'background-color 0.15s ease'
+                  }}
+                >
                   <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: `${activity.color}.main` }}>
-                      <IconComponent />
-                    </Avatar>
+                    <Box sx={{ 
+                      width: 40, 
+                      height: 40, 
+                      borderRadius: 1.5, 
+                      bgcolor: `${activity.color}.main`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white'
+                    }}>
+                      <IconComponent sx={{ fontSize: 20 }} />
+                    </Box>
                   </ListItemAvatar>
                   <ListItemText
-                    primary={activity.action}
-                    secondary={activity.entity}
+                    primary={<Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.9375rem' }}>{activity.action}</Typography>}
+                    secondary={<Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8125rem' }}>{activity.entity}</Typography>}
                   />
                   <Box sx={{ textAlign: 'right' }}>
-                    <Typography variant="body2" fontWeight={600} sx={{ fontVariantNumeric: 'tabular-nums' }}>
+                    <Typography variant="body2" fontWeight={600} sx={{ fontVariantNumeric: 'tabular-nums', fontSize: '0.9375rem' }}>
                       {activity.amount}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary">
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
                       {activity.time}
                     </Typography>
                   </Box>

@@ -4,50 +4,54 @@ const getThemeOptions = (mode: 'light' | 'dark'): ThemeOptions => ({
   palette: {
     mode,
     primary: {
-      main: mode === 'light' ? '#6366f1' : '#818cf8',
-      light: mode === 'light' ? '#818cf8' : '#a5b4fc',
-      dark: mode === 'light' ? '#4f46e5' : '#6366f1',
+      main: mode === 'light' ? '#635BFF' : '#7A73FF',
+      light: mode === 'light' ? '#7A73FF' : '#8F89FF',
+      dark: mode === 'light' ? '#0A2540' : '#635BFF',
     },
     success: {
-      main: '#10b981',
-      light: '#34d399',
-      dark: '#059669',
+      main: '#00D924',
+      light: '#3ADB54',
+      dark: '#00B81D',
     },
     warning: {
-      main: '#f59e0b',
-      light: '#fbbf24',
-      dark: '#d97706',
+      main: '#FFC043',
+      light: '#FFCD6A',
+      dark: '#F5A623',
     },
     error: {
-      main: '#ef4444',
-      light: '#f87171',
-      dark: '#dc2626',
+      main: '#DF1B41',
+      light: '#E5476A',
+      dark: '#C41537',
     },
     background: {
-      default: mode === 'light' ? '#f8fafc' : '#0f172a',
-      paper: mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(30, 41, 59, 0.7)',
+      default: mode === 'light' ? '#F6F9FC' : '#0A2540',
+      paper: mode === 'light' ? '#FFFFFF' : '#0E1C2E',
     },
     text: {
-      primary: mode === 'light' ? '#0f172a' : '#f1f5f9',
-      secondary: mode === 'light' ? '#64748b' : '#94a3b8',
+      primary: mode === 'light' ? '#0A2540' : '#F6F9FC',
+      secondary: mode === 'light' ? '#425466' : '#89A3B9',
     },
+    divider: mode === 'light' ? '#E3E8EE' : '#1A2F45',
   },
   typography: {
-    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h1: {
-      fontSize: '3rem',
-      fontWeight: 700,
+      fontSize: '2.5rem',
+      fontWeight: 600,
       lineHeight: 1.2,
+      letterSpacing: '-0.02em',
     },
     h2: {
-      fontSize: '2rem',
+      fontSize: '1.875rem',
       fontWeight: 600,
       lineHeight: 1.3,
+      letterSpacing: '-0.01em',
     },
     h3: {
       fontSize: '1.5rem',
       fontWeight: 600,
       lineHeight: 1.4,
+      letterSpacing: '-0.01em',
     },
     h4: {
       fontSize: '1.25rem',
@@ -65,30 +69,36 @@ const getThemeOptions = (mode: 'light' | 'dark'): ThemeOptions => ({
       lineHeight: 1.5,
     },
     body1: {
-      fontSize: '0.875rem',
-      lineHeight: 1.5,
+      fontSize: '0.9375rem',
+      lineHeight: 1.6,
     },
     body2: {
-      fontSize: '0.75rem',
+      fontSize: '0.8125rem',
       lineHeight: 1.5,
+      color: mode === 'light' ? '#425466' : '#89A3B9',
     },
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 6,
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: 'none',
-          fontWeight: 600,
-          borderRadius: 12,
-          padding: '10px 24px',
+          fontWeight: 500,
+          borderRadius: 6,
+          padding: '8px 16px',
           boxShadow: 'none',
+          fontSize: '0.9375rem',
           '&:hover': {
-            boxShadow: mode === 'light' 
-              ? '0 10px 25px -5px rgba(99, 102, 241, 0.3)'
-              : '0 10px 25px -5px rgba(129, 140, 248, 0.3)',
+            boxShadow: 'none',
+          },
+        },
+        contained: {
+          '&:hover': {
+            transform: 'translateY(-1px)',
+            transition: 'transform 0.2s ease',
           },
         },
       },
@@ -96,18 +106,20 @@ const getThemeOptions = (mode: 'light' | 'dark'): ThemeOptions => ({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 20,
-          backdropFilter: 'blur(20px)',
-          background: mode === 'light'
-            ? 'rgba(255, 255, 255, 0.7)'
-            : 'rgba(30, 41, 59, 0.7)',
+          borderRadius: 8,
+          background: mode === 'light' ? '#FFFFFF' : '#0E1C2E',
           border: mode === 'light' 
-            ? '1px solid rgba(255, 255, 255, 0.8)'
-            : '1px solid rgba(71, 85, 105, 0.3)',
+            ? '1px solid #E3E8EE'
+            : '1px solid #1A2F45',
           boxShadow: mode === 'light'
-            ? '0 8px 32px 0 rgba(31, 38, 135, 0.15)'
-            : '0 8px 32px 0 rgba(0, 0, 0, 0.4)',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            ? '0 1px 3px rgba(50, 50, 93, 0.05), 0 1px 0 rgba(0, 0, 0, 0.02)'
+            : '0 1px 3px rgba(0, 0, 0, 0.3)',
+          transition: 'all 0.15s ease',
+          '&:hover': {
+            boxShadow: mode === 'light'
+              ? '0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)'
+              : '0 4px 6px rgba(0, 0, 0, 0.4)',
+          },
         },
       },
     },
@@ -115,31 +127,45 @@ const getThemeOptions = (mode: 'light' | 'dark'): ThemeOptions => ({
       styleOverrides: {
         root: {
           backgroundImage: 'none',
-          backdropFilter: 'blur(20px)',
-          borderRadius: 16,
+          borderRadius: 8,
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backdropFilter: 'blur(20px)',
-          background: mode === 'light'
-            ? 'rgba(255, 255, 255, 0.8)'
-            : 'rgba(15, 23, 42, 0.8)',
+          background: mode === 'light' ? '#FFFFFF' : '#0E1C2E',
+          boxShadow: mode === 'light'
+            ? '0 1px 0 0 #E3E8EE'
+            : '0 1px 0 0 #1A2F45',
         },
       },
     },
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backdropFilter: 'blur(20px)',
-          background: mode === 'light'
-            ? 'rgba(255, 255, 255, 0.8)'
-            : 'rgba(15, 23, 42, 0.8)',
+          background: mode === 'light' ? '#FFFFFF' : '#0A2540',
           borderRight: mode === 'light'
-            ? '1px solid rgba(226, 232, 240, 0.8)'
-            : '1px solid rgba(71, 85, 105, 0.3)',
+            ? '1px solid #E3E8EE'
+            : '1px solid #1A2F45',
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          borderBottom: mode === 'light'
+            ? '1px solid #E3E8EE'
+            : '1px solid #1A2F45',
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 6,
+          fontWeight: 500,
+          fontSize: '0.8125rem',
         },
       },
     },
