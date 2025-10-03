@@ -1,35 +1,30 @@
-import { AppBar, Toolbar, IconButton, Badge, Box } from '@mui/material';
-import { Notifications, Menu as MenuIcon } from '@mui/icons-material';
+import { Layout, Badge, Space } from 'antd';
+import { BellOutlined } from '@ant-design/icons';
 import { ThemeToggle } from './theme-toggle';
+
+const { Header } = Layout;
 
 export function PageHeader() {
   return (
-    <AppBar 
-      position="sticky" 
-      color="default" 
-      elevation={0}
+    <Header 
+      style={{ 
+        padding: '0 24px',
+        background: 'var(--ant-layout-header-bg)',
+        borderBottom: '1px solid var(--ant-color-border)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10,
+      }}
     >
-      <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          sx={{ mr: 2, display: { md: 'none' } }}
-        >
-          <MenuIcon />
-        </IconButton>
-        
-        <Box sx={{ flexGrow: 1 }} />
-        
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <IconButton color="inherit" size="small">
-            <Badge badgeContent={3} color="error">
-              <Notifications />
-            </Badge>
-          </IconButton>
-          
-          <ThemeToggle />
-        </Box>
-      </Toolbar>
-    </AppBar>
+      <Space size="middle">
+        <Badge count={3} size="small">
+          <BellOutlined style={{ fontSize: 20, cursor: 'pointer' }} />
+        </Badge>
+        <ThemeToggle />
+      </Space>
+    </Header>
   );
 }
