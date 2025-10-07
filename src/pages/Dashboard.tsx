@@ -60,82 +60,83 @@ const topCustomers = [
 
 const Dashboard = () => {
   return (
-    <div className="flex-1 space-y-6 p-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+    <div className="flex-1 space-y-4 sm:space-y-6 p-3 sm:p-4 md:p-6 animate-fade-in max-w-[1600px] mx-auto">
+      {/* Header */}
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-muted-foreground mt-1 text-xs sm:text-sm">
             Welcome back! Here's what's happening with your settlements today.
           </p>
         </div>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="transition-smooth hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-primary" />
+      {/* KPI Cards - Responsive Grid */}
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
+        <Card className="transition-smooth hover:shadow-lg touch-manipulation active:scale-[0.98]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 px-4 py-3 sm:p-6 sm:pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-primary flex-shrink-0" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold financial-number">$791,000</div>
-            <div className="flex items-center text-xs text-success mt-1">
-              <ArrowUpRight className="h-3 w-3 mr-1" />
-              <span>+12.5% from last month</span>
+          <CardContent className="px-4 py-3 pt-0 sm:p-6 sm:pt-0">
+            <div className="text-lg sm:text-2xl font-bold financial-number">$791K</div>
+            <div className="flex items-center text-[10px] sm:text-xs text-success mt-1">
+              <ArrowUpRight className="h-3 w-3 mr-1 flex-shrink-0" />
+              <span className="truncate">+12.5%</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Pending Settlements</CardTitle>
-            <Clock className="h-4 w-4 text-warning" />
+        <Card className="transition-smooth hover:shadow-lg touch-manipulation active:scale-[0.98]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 px-4 py-3 sm:p-6 sm:pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium">Pending</CardTitle>
+            <Clock className="h-4 w-4 text-warning flex-shrink-0" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold financial-number">$125,400</div>
-            <div className="flex items-center text-xs text-muted-foreground mt-1">
-              <span>45 settlements awaiting approval</span>
+          <CardContent className="px-4 py-3 pt-0 sm:p-6 sm:pt-0">
+            <div className="text-lg sm:text-2xl font-bold financial-number">$125K</div>
+            <div className="flex items-center text-[10px] sm:text-xs text-muted-foreground mt-1">
+              <span className="truncate">45 awaiting</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Active Disputes</CardTitle>
-            <AlertCircle className="h-4 w-4 text-error" />
+        <Card className="transition-smooth hover:shadow-lg touch-manipulation active:scale-[0.98]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 px-4 py-3 sm:p-6 sm:pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium">Disputes</CardTitle>
+            <AlertCircle className="h-4 w-4 text-error flex-shrink-0" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold financial-number">8</div>
-            <div className="flex items-center text-xs text-error mt-1">
-              <ArrowUpRight className="h-3 w-3 mr-1" />
-              <span>+2 from yesterday</span>
+          <CardContent className="px-4 py-3 pt-0 sm:p-6 sm:pt-0">
+            <div className="text-lg sm:text-2xl font-bold financial-number">8</div>
+            <div className="flex items-center text-[10px] sm:text-xs text-error mt-1">
+              <ArrowUpRight className="h-3 w-3 mr-1 flex-shrink-0" />
+              <span className="truncate">+2 today</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth hover:shadow-lg">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">API Consumption</CardTitle>
-            <Activity className="h-4 w-4 text-primary" />
+        <Card className="transition-smooth hover:shadow-lg touch-manipulation active:scale-[0.98]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 px-4 py-3 sm:p-6 sm:pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium">API Usage</CardTitle>
+            <Activity className="h-4 w-4 text-primary flex-shrink-0" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold financial-number">1.2M</div>
-            <div className="flex items-center text-xs text-muted-foreground mt-1">
-              <span>78% of monthly limit</span>
+          <CardContent className="px-4 py-3 pt-0 sm:p-6 sm:pt-0">
+            <div className="text-lg sm:text-2xl font-bold financial-number">1.2M</div>
+            <div className="flex items-center text-[10px] sm:text-xs text-muted-foreground mt-1">
+              <span className="truncate">78% used</span>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Charts Row 1 */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Revenue Trends</CardTitle>
-            <p className="text-sm text-muted-foreground">Monthly revenue vs expenses (last 12 months)</p>
+      {/* Charts Row - Responsive Stacking */}
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 lg:grid-cols-2">
+        <Card className="touch-manipulation">
+          <CardHeader className="px-4 py-3 sm:p-6">
+            <CardTitle className="text-base sm:text-lg">Revenue Trends</CardTitle>
+            <p className="text-xs sm:text-sm text-muted-foreground">Monthly revenue vs expenses</p>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="px-2 sm:px-6 pb-4">
+            <ResponsiveContainer width="100%" height={250}>
               <AreaChart data={revenueData}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -179,13 +180,13 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Settlement Status</CardTitle>
-            <p className="text-sm text-muted-foreground">Current settlement breakdown</p>
+        <Card className="touch-manipulation">
+          <CardHeader className="px-4 py-3 sm:p-6">
+            <CardTitle className="text-base sm:text-lg">Settlement Status</CardTitle>
+            <p className="text-xs sm:text-sm text-muted-foreground">Current settlement breakdown</p>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="px-2 sm:px-6 pb-4">
+            <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
                   data={settlementData}
@@ -214,14 +215,14 @@ const Dashboard = () => {
         </Card>
       </div>
 
-      {/* Top Customers */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Top 5 Customers by Volume</CardTitle>
-          <p className="text-sm text-muted-foreground">Highest transaction volumes this month</p>
+      {/* Top Customers - Responsive */}
+      <Card className="touch-manipulation">
+        <CardHeader className="px-4 py-3 sm:p-6">
+          <CardTitle className="text-base sm:text-lg">Top 5 Customers by Volume</CardTitle>
+          <p className="text-xs sm:text-sm text-muted-foreground">Highest transaction volumes this month</p>
         </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
+        <CardContent className="px-2 sm:px-6 pb-4">
+          <ResponsiveContainer width="100%" height={280}>
             <BarChart data={topCustomers} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis type="number" className="text-xs" />
@@ -240,14 +241,14 @@ const Dashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Recent Activity */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
-          <p className="text-sm text-muted-foreground">Latest transactions and events</p>
+      {/* Recent Activity - Touch Optimized */}
+      <Card className="touch-manipulation">
+        <CardHeader className="px-4 py-3 sm:p-6">
+          <CardTitle className="text-base sm:text-lg">Recent Activity</CardTitle>
+          <p className="text-xs sm:text-sm text-muted-foreground">Latest transactions and events</p>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
+        <CardContent className="px-4 py-3 sm:p-6">
+          <div className="space-y-3 sm:space-y-4">
             {[
               { action: 'Settlement approved', entity: 'TSP Partner A', amount: '$15,420', time: '2 minutes ago', icon: DollarSign, color: 'text-success' },
               { action: 'Invoice generated', entity: 'Acme Corp', amount: '$8,750', time: '15 minutes ago', icon: CreditCard, color: 'text-primary' },
@@ -255,17 +256,17 @@ const Dashboard = () => {
               { action: 'New customer added', entity: 'Global Finance', amount: '-', time: '2 hours ago', icon: Users, color: 'text-muted-foreground' },
               { action: 'Settlement completed', entity: 'Swift Pay', amount: '$12,300', time: '3 hours ago', icon: DollarSign, color: 'text-success' },
             ].map((activity, idx) => (
-              <div key={idx} className="flex items-center gap-4 pb-4 last:pb-0 border-b last:border-0">
-                <div className={`rounded-full p-2 bg-muted ${activity.color}`}>
+              <div key={idx} className="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 last:pb-0 border-b last:border-0 touch-manipulation hover:bg-accent/30 -mx-2 sm:-mx-4 px-2 sm:px-4 py-2 rounded-lg transition-colors">
+                <div className={`rounded-full p-2 bg-muted ${activity.color} flex-shrink-0`}>
                   <activity.icon className="h-4 w-4" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">{activity.action}</p>
-                  <p className="text-xs text-muted-foreground">{activity.entity}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs sm:text-sm font-medium truncate">{activity.action}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground truncate">{activity.entity}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-semibold financial-number">{activity.amount}</p>
-                  <p className="text-xs text-muted-foreground">{activity.time}</p>
+                <div className="text-right flex-shrink-0">
+                  <p className="text-xs sm:text-sm font-semibold financial-number">{activity.amount}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">{activity.time}</p>
                 </div>
               </div>
             ))}

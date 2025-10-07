@@ -36,15 +36,15 @@ export function AppSidebar() {
   const user = useAuthStore((state) => state.user);
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" className="border-r">
       <SidebarHeader className="border-b border-sidebar-border p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary flex-shrink-0">
             <DollarSign className="h-5 w-5 text-primary-foreground" />
           </div>
-          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold text-sidebar-foreground">BillSettle</span>
-            <span className="text-xs text-sidebar-foreground/60">Settlement Platform</span>
+          <div className="flex flex-col group-data-[collapsible=icon]:hidden min-w-0">
+            <span className="text-sm font-semibold text-sidebar-foreground truncate">BillSettle</span>
+            <span className="text-xs text-sidebar-foreground/60 truncate">Settlement Platform</span>
           </div>
         </div>
       </SidebarHeader>
@@ -79,14 +79,14 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-sidebar-border p-4">
         <div className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center">
-          <Avatar className="h-8 w-8">
+          <Avatar className="h-8 w-8 flex-shrink-0">
             <AvatarFallback className="bg-primary text-primary-foreground text-xs">
               {user?.name.split(' ').map(n => n[0]).join('') || 'U'}
             </AvatarFallback>
           </Avatar>
-          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-medium text-sidebar-foreground">{user?.name}</span>
-            <span className="text-xs text-sidebar-foreground/60 capitalize">
+          <div className="flex flex-col group-data-[collapsible=icon]:hidden min-w-0">
+            <span className="text-sm font-medium text-sidebar-foreground truncate">{user?.name}</span>
+            <span className="text-xs text-sidebar-foreground/60 capitalize truncate">
               {user?.role.replace('-', ' ')}
             </span>
           </div>

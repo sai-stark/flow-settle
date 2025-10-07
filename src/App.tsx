@@ -7,6 +7,8 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppSidebar } from "@/components/app-sidebar";
 import { PageHeader } from "@/components/page-header";
+import { MobileHeader } from "@/components/mobile-header";
+import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import Dashboard from "./pages/Dashboard";
 import Configuration from "./pages/Configuration";
 import Settlements from "./pages/Settlements";
@@ -26,10 +28,22 @@ const App = () => (
         <BrowserRouter>
           <SidebarProvider defaultOpen={true}>
             <div className="flex min-h-screen w-full">
-              <AppSidebar />
-              <div className="flex flex-1 flex-col">
-                <PageHeader />
-                <main className="flex-1">
+              {/* Desktop Sidebar - Hidden on mobile */}
+              <div className="hidden md:block">
+                <AppSidebar />
+              </div>
+              
+              <div className="flex flex-1 flex-col w-full md:w-auto">
+                {/* Desktop Header - Hidden on mobile */}
+                <div className="hidden md:block">
+                  <PageHeader />
+                </div>
+                
+                {/* Mobile Header - Hidden on desktop */}
+                <MobileHeader />
+                
+                {/* Main Content with mobile padding for bottom nav */}
+                <main className="flex-1 pb-20 md:pb-0">
                   <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/configuration" element={<Configuration />} />
@@ -40,6 +54,9 @@ const App = () => (
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
+                
+                {/* Mobile Bottom Navigation */}
+                <MobileBottomNav />
               </div>
             </div>
           </SidebarProvider>

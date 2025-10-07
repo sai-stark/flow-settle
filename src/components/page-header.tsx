@@ -15,17 +15,17 @@ import { Badge } from '@/components/ui/badge';
 export function PageHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-16 items-center gap-4 px-6">
-        <SidebarTrigger className="-ml-2" />
+      <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
+        <SidebarTrigger className="-ml-2 touch-manipulation" />
         
         <div className="flex flex-1 items-center justify-end gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative">
+              <Button variant="ghost" size="icon" className="relative touch-manipulation">
                 <Bell className="h-5 w-5" />
                 <Badge 
                   variant="destructive" 
-                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center p-0 text-xs"
+                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center p-0 text-xs pointer-events-none"
                 >
                   3
                 </Badge>
