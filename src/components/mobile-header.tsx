@@ -71,8 +71,8 @@ export function MobileHeader() {
                       className={({ isActive }) =>
                         `flex items-center gap-3 px-3 py-3 rounded-lg transition-all touch-manipulation ${
                           isActive
-                            ? 'bg-primary text-primary-foreground'
-                            : 'text-foreground hover:bg-accent'
+                            ? 'bg-primary text-primary-foreground font-semibold'
+                            : 'text-foreground hover:bg-accent hover:text-accent-foreground'
                         }`
                       }
                     >

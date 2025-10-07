@@ -62,8 +62,8 @@ export function AppSidebar() {
                       end={item.url === '/'}
                       className={({ isActive }) =>
                         isActive
-                          ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                          : 'hover:bg-sidebar-accent/50'
+                          ? 'sidebar-item-active font-semibold'
+                          : 'sidebar-item-hover'
                       }
                     >
                       <item.icon className="h-4 w-4" />
