@@ -1,60 +1,52 @@
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ConfigProvider, theme as antdTheme } from 'antd';
-import { useThemeStore } from '@/stores/theme-store';
-import { getAntdTheme } from '@/theme/antd-theme';
-import { AppLayout } from '@/components/app-layout';
-import Dashboard from './pages/Dashboard';
-import Configuration from './pages/Configuration';
-import Settlements from './pages/Settlements';
-import Invoices from './pages/Invoices';
-import Balance from './pages/Balance';
-import Disputes from './pages/Disputes';
-import NotFound from './pages/NotFound';
-import { useMemo, useEffect } from 'react';
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { AppSidebar } from "@/components/app-sidebar";
+import { PageHeader } from "@/components/page-header";
+import Dashboard from "./pages/Dashboard";
+import Configuration from "./pages/Configuration";
+import Settlements from "./pages/Settlements";
+import Invoices from "./pages/Invoices";
+import Balance from "./pages/Balance";
+import Disputes from "./pages/Disputes";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-function App() {
-  const themeMode = useThemeStore((state) => state.theme);
-  
-  const resolvedTheme = useMemo(() => {
-    if (themeMode === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    return themeMode;
-  }, [themeMode]);
-
-  const antdConfig = useMemo(() => ({
-    ...getAntdTheme(resolvedTheme),
-    algorithm: resolvedTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
-  }), [resolvedTheme]);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(resolvedTheme);
-  }, [resolvedTheme]);
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ConfigProvider theme={antdConfig}>
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner position="top-center" />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AppLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="configuration" element={<Configuration />} />
-              <Route path="settlements" element={<Settlements />} />
-              <Route path="invoices" element={<Invoices />} />
-              <Route path="balance" element={<Balance />} />
-              <Route path="disputes" element={<Disputes />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
+          <SidebarProvider defaultOpen={true}>
+            <div className="flex min-h-screen w-full">
+              <AppSidebar />
+              <div className="flex flex-1 flex-col">
+                <PageHeader />
+                <main className="flex-1">
+                  <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/configuration" element={<Configuration />} />
+                    <Route path="/settlements" element={<Settlements />} />
+                    <Route path="/invoices" element={<Invoices />} />
+                    <Route path="/balance" element={<Balance />} />
+                    <Route path="/disputes" element={<Disputes />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </main>
+              </div>
+            </div>
+          </SidebarProvider>
         </BrowserRouter>
-      </ConfigProvider>
-    </QueryClientProvider>
-  );
-}
+      </TooltipProvider>
+    </ThemeProvider>
+  </QueryClientProvider>
+);
 
 export default App;

@@ -12,12 +12,16 @@ import {
   AlertTriangle,
   XCircle
 } from 'lucide-react';
-import { ResponsiveTable } from '@/components/responsive-table';
-import { useIsMobile } from '@/hooks/use-media-query';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 const Invoices = () => {
-  const isMobile = useIsMobile();
-  
   const invoices = [
     { 
       id: 'INV-2024-001', 
@@ -90,81 +94,71 @@ const Invoices = () => {
       .reduce((sum, inv) => sum + inv.amount, 0);
   };
 
-  const columns = [
-    { key: 'id', header: 'Invoice ID', mobileLabel: 'ID', className: 'font-medium' },
-    { key: 'customer', header: 'Customer', mobileLabel: 'Customer' },
-    { key: 'issueDate', header: 'Issue Date', mobileLabel: 'Issued', hideOnMobile: true },
-    { key: 'dueDate', header: 'Due Date', mobileLabel: 'Due' },
-    { key: 'amount', header: 'Amount', mobileLabel: 'Amount', className: 'financial-number font-semibold' },
-    { key: 'status', header: 'Status', mobileLabel: 'Status' },
-    { key: 'actions', header: 'Actions', mobileLabel: 'Actions', className: 'text-right' },
-  ];
-
   return (
-    <div className="flex-1 space-y-4 p-4 animate-fade-in md:space-y-6 md:p-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex-1 space-y-6 p-6 animate-fade-in">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Invoices</h1>
-          <p className="text-muted-foreground mt-1 text-sm md:text-base">
-            {isMobile ? 'Track invoices' : 'Track and manage all your invoices in one place'}
+          <h1 className="text-3xl font-bold tracking-tight">Invoices</h1>
+          <p className="text-muted-foreground mt-1">
+            Track and manage all your invoices in one place
           </p>
         </div>
-        <Button className="bg-gradient-primary w-full sm:w-auto" size={isMobile ? 'default' : 'default'}>
+        <Button className="bg-gradient-primary">
           <FileText className="mr-2 h-4 w-4" />
-          {isMobile ? 'New' : 'Create Invoice'}
+          Create Invoice
         </Button>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid gap-3 grid-cols-2 md:gap-4 lg:grid-cols-4">
-        <Card className="transition-smooth active:scale-[0.98]">
-          <CardHeader className="pb-2 space-y-0">
-            <CardTitle className="text-xs font-medium flex items-center gap-2 md:text-sm">
-              <CheckCircle className="h-3.5 w-3.5 text-success md:h-4 md:w-4" />
+      <div className="grid gap-4 md:grid-cols-4">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-success" />
               Paid
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold financial-number md:text-2xl">
+            <div className="text-2xl font-bold financial-number">
               ${getTotalByStatus('paid').toLocaleString()}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth active:scale-[0.98]">
-          <CardHeader className="pb-2 space-y-0">
-            <CardTitle className="text-xs font-medium flex items-center gap-2 md:text-sm">
-              <Clock className="h-3.5 w-3.5 text-warning md:h-4 md:w-4" />
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <Clock className="h-4 w-4 text-warning" />
               Pending
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold financial-number md:text-2xl">
+            <div className="text-2xl font-bold financial-number">
               ${getTotalByStatus('pending').toLocaleString()}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth active:scale-[0.98]">
-          <CardHeader className="pb-2 space-y-0">
-            <CardTitle className="text-xs font-medium flex items-center gap-2 md:text-sm">
-              <AlertTriangle className="h-3.5 w-3.5 text-error md:h-4 md:w-4" />
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-error" />
               Overdue
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold financial-number text-error md:text-2xl">
+            <div className="text-2xl font-bold financial-number text-error">
               ${getTotalByStatus('overdue').toLocaleString()}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="transition-smooth active:scale-[0.98]">
-          <CardHeader className="pb-2 space-y-0">
-            <CardTitle className="text-xs font-medium md:text-sm">Total Invoiced</CardTitle>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Total Invoiced</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold financial-number md:text-2xl">
+            <div className="text-2xl font-bold financial-number">
               ${invoices.reduce((sum, inv) => sum + inv.amount, 0).toLocaleString()}
             </div>
           </CardContent>
@@ -173,61 +167,60 @@ const Invoices = () => {
 
       {/* Invoices Table */}
       <Card>
-        <CardHeader className="pb-3 md:pb-6">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <CardTitle className={isMobile ? 'text-base' : 'text-lg'}>All Invoices</CardTitle>
-            <div className="relative w-full sm:w-64">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle>All Invoices</CardTitle>
+            <div className="relative w-64">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder={isMobile ? 'Search...' : 'Search invoices...'}
-                className="pl-9 h-9"
+                placeholder="Search invoices..."
+                className="pl-9"
               />
             </div>
           </div>
         </CardHeader>
-        <CardContent className="px-3 md:px-6">
-          <ResponsiveTable
-            columns={columns}
-            data={invoices}
-            keyExtractor={(item) => item.id}
-            mobileCardTitle={(invoice) => (
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-sm">{invoice.id}</span>
-                {getStatusBadge(invoice.status)}
-              </div>
-            )}
-            renderCell={(invoice, column) => {
-              switch (column.key) {
-                case 'id':
-                  return invoice.id;
-                case 'customer':
-                  return invoice.customer;
-                case 'issueDate':
-                  return invoice.issueDate;
-                case 'dueDate':
-                  return invoice.dueDate;
-                case 'amount':
-                  return `$${invoice.amount.toLocaleString()}`;
-                case 'status':
-                  return getStatusBadge(invoice.status);
-                case 'actions':
-                  return (
-                    <div className="flex justify-end gap-1 md:gap-2">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9" title="Download PDF">
-                        <Download className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                      </Button>
-                      {invoice.status === 'pending' && (
-                        <Button variant="ghost" size="icon" className="h-8 w-8 md:h-9 md:w-9" title="Send Reminder">
-                          <Send className="h-3.5 w-3.5 md:h-4 md:w-4" />
+        <CardContent>
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Invoice ID</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Issue Date</TableHead>
+                  <TableHead>Due Date</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {invoices.map((invoice) => (
+                  <TableRow key={invoice.id}>
+                    <TableCell className="font-medium">{invoice.id}</TableCell>
+                    <TableCell>{invoice.customer}</TableCell>
+                    <TableCell>{invoice.issueDate}</TableCell>
+                    <TableCell>{invoice.dueDate}</TableCell>
+                    <TableCell className="financial-number font-semibold">
+                      ${invoice.amount.toLocaleString()}
+                    </TableCell>
+                    <TableCell>{getStatusBadge(invoice.status)}</TableCell>
+                    <TableCell>
+                      <div className="flex justify-end gap-2">
+                        <Button variant="ghost" size="icon" title="Download PDF">
+                          <Download className="h-4 w-4" />
                         </Button>
-                      )}
-                    </div>
-                  );
-                default:
-                  return null;
-              }
-            }}
-          />
+                        {invoice.status === 'pending' && (
+                          <Button variant="ghost" size="icon" title="Send Reminder">
+                            <Send className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

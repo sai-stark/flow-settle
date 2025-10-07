@@ -1,14 +1,18 @@
-import { Card, Typography, Row, Col, Tag, Statistic, List, Avatar, Space } from 'antd';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { 
+  TrendingUp, 
+  Clock, 
+  AlertCircle, 
+  Activity,
+  DollarSign,
+  Users,
+  CreditCard,
+  ArrowUpRight,
+  ArrowDownRight
+} from 'lucide-react';
 import {
-  DollarOutlined,
-  ClockCircleOutlined,
-  WarningOutlined,
-  ApiOutlined,
-  ArrowUpOutlined,
-  UserOutlined,
-  FileTextOutlined,
-} from '@ant-design/icons';
-import {
+  LineChart,
+  Line,
   AreaChart,
   Area,
   BarChart,
@@ -20,10 +24,9 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  Legend,
   ResponsiveContainer,
 } from 'recharts';
-
-const { Title, Text, Paragraph } = Typography;
 
 const revenueData = [
   { month: 'Jan', revenue: 45000, expenses: 28000 },
@@ -32,13 +35,19 @@ const revenueData = [
   { month: 'Apr', revenue: 61000, expenses: 35000 },
   { month: 'May', revenue: 58000, expenses: 33000 },
   { month: 'Jun', revenue: 67000, expenses: 38000 },
+  { month: 'Jul', revenue: 72000, expenses: 41000 },
+  { month: 'Aug', revenue: 69000, expenses: 39000 },
+  { month: 'Sep', revenue: 75000, expenses: 42000 },
+  { month: 'Oct', revenue: 81000, expenses: 45000 },
+  { month: 'Nov', revenue: 78000, expenses: 44000 },
+  { month: 'Dec', revenue: 85000, expenses: 48000 },
 ];
 
 const settlementData = [
-  { name: 'Completed', value: 234, color: '#00D924' },
-  { name: 'Pending', value: 45, color: '#FFC043' },
-  { name: 'Rejected', value: 12, color: '#DF1B41' },
-  { name: 'In Review', value: 28, color: '#635BFF' },
+  { name: 'Completed', value: 234, color: 'hsl(var(--success))' },
+  { name: 'Pending', value: 45, color: 'hsl(var(--warning))' },
+  { name: 'Rejected', value: 12, color: 'hsl(var(--error))' },
+  { name: 'In Review', value: 28, color: 'hsl(var(--primary))' },
 ];
 
 const topCustomers = [
@@ -49,172 +58,133 @@ const topCustomers = [
   { name: 'Digital Bank', volume: 65000 },
 ];
 
-const recentActivity = [
-  { action: 'Settlement approved', entity: 'TSP Partner A', amount: '$15,420', time: '2 min ago', icon: DollarOutlined, color: '#00D924' },
-  { action: 'Invoice generated', entity: 'Acme Corp', amount: '$8,750', time: '15 min ago', icon: FileTextOutlined, color: '#635BFF' },
-  { action: 'Dispute raised', entity: 'TechStart Inc', amount: '$3,200', time: '1 hour ago', icon: WarningOutlined, color: '#DF1B41' },
-  { action: 'New customer added', entity: 'Global Finance', amount: '-', time: '2 hours ago', icon: UserOutlined, color: '#425466' },
-  { action: 'Settlement completed', entity: 'Swift Pay', amount: '$12,300', time: '3 hours ago', icon: DollarOutlined, color: '#00D924' },
-];
-
 const Dashboard = () => {
   return (
-    <div style={{ padding: '24px 32px' }}>
-      <div style={{ marginBottom: 40 }}>
-        <Title level={2} style={{ marginBottom: 4, fontWeight: 600 }}>
-          Dashboard
-        </Title>
-        <Paragraph style={{ fontSize: 15, color: '#425466', margin: 0 }}>
-          Welcome back! Here's what's happening with your settlements today.
-        </Paragraph>
+    <div className="flex-1 space-y-6 p-6 animate-fade-in">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-muted-foreground mt-1">
+            Welcome back! Here's what's happening with your settlements today.
+          </p>
+        </div>
       </div>
 
       {/* KPI Cards */}
-      <Row gutter={[20, 20]} style={{ marginBottom: 32 }}>
-        <Col xs={24} sm={12} lg={6}>
-          <Card>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-              <div style={{ 
-                width: 40, 
-                height: 40, 
-                borderRadius: 6, 
-                background: '#635BFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white'
-              }}>
-                <DollarOutlined style={{ fontSize: 20 }} />
-              </div>
-              <Tag color="success" style={{ border: 'none', background: 'rgba(0, 217, 36, 0.1)', color: '#00D924' }}>
-                +12.5%
-              </Tag>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="transition-smooth hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold financial-number">$791,000</div>
+            <div className="flex items-center text-xs text-success mt-1">
+              <ArrowUpRight className="h-3 w-3 mr-1" />
+              <span>+12.5% from last month</span>
             </div>
-            <Text type="secondary" style={{ fontSize: 13, display: 'block', marginBottom: 4 }}>
-              Total Revenue
-            </Text>
-            <Title level={3} style={{ margin: 0, fontWeight: 600, letterSpacing: '-0.02em' }}>
-              $791,000
-            </Title>
-          </Card>
-        </Col>
+          </CardContent>
+        </Card>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Card>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-              <div style={{ 
-                width: 40, 
-                height: 40, 
-                borderRadius: 6, 
-                background: '#FFC043',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white'
-              }}>
-                <ClockCircleOutlined style={{ fontSize: 20 }} />
-              </div>
-              <Tag style={{ border: 'none', background: 'rgba(255, 192, 67, 0.1)', color: '#FFC043' }}>
-                45 pending
-              </Tag>
+        <Card className="transition-smooth hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">Pending Settlements</CardTitle>
+            <Clock className="h-4 w-4 text-warning" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold financial-number">$125,400</div>
+            <div className="flex items-center text-xs text-muted-foreground mt-1">
+              <span>45 settlements awaiting approval</span>
             </div>
-            <Text type="secondary" style={{ fontSize: 13, display: 'block', marginBottom: 4 }}>
-              Pending Settlements
-            </Text>
-            <Title level={3} style={{ margin: 0, fontWeight: 600, letterSpacing: '-0.02em' }}>
-              $125,400
-            </Title>
-          </Card>
-        </Col>
+          </CardContent>
+        </Card>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Card>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-              <div style={{ 
-                width: 40, 
-                height: 40, 
-                borderRadius: 6, 
-                background: '#DF1B41',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white'
-              }}>
-                <WarningOutlined style={{ fontSize: 20 }} />
-              </div>
-              <Tag color="error" style={{ border: 'none', background: 'rgba(223, 27, 65, 0.1)', color: '#DF1B41' }}>
-                +2 today
-              </Tag>
+        <Card className="transition-smooth hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">Active Disputes</CardTitle>
+            <AlertCircle className="h-4 w-4 text-error" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold financial-number">8</div>
+            <div className="flex items-center text-xs text-error mt-1">
+              <ArrowUpRight className="h-3 w-3 mr-1" />
+              <span>+2 from yesterday</span>
             </div>
-            <Text type="secondary" style={{ fontSize: 13, display: 'block', marginBottom: 4 }}>
-              Active Disputes
-            </Text>
-            <Title level={3} style={{ margin: 0, fontWeight: 600, letterSpacing: '-0.02em' }}>
-              8
-            </Title>
-          </Card>
-        </Col>
+          </CardContent>
+        </Card>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Card>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-              <div style={{ 
-                width: 40, 
-                height: 40, 
-                borderRadius: 6, 
-                background: '#635BFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white'
-              }}>
-                <ApiOutlined style={{ fontSize: 20 }} />
-              </div>
-              <Tag style={{ border: 'none', background: 'rgba(99, 91, 255, 0.1)', color: '#635BFF' }}>
-                78%
-              </Tag>
+        <Card className="transition-smooth hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">API Consumption</CardTitle>
+            <Activity className="h-4 w-4 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold financial-number">1.2M</div>
+            <div className="flex items-center text-xs text-muted-foreground mt-1">
+              <span>78% of monthly limit</span>
             </div>
-            <Text type="secondary" style={{ fontSize: 13, display: 'block', marginBottom: 4 }}>
-              API Consumption
-            </Text>
-            <Title level={3} style={{ margin: 0, fontWeight: 600, letterSpacing: '-0.02em' }}>
-              1.2M
-            </Title>
-          </Card>
-        </Col>
-      </Row>
+          </CardContent>
+        </Card>
+      </div>
 
-      {/* Charts Row */}
-      <Row gutter={[20, 20]} style={{ marginBottom: 32 }}>
-        <Col xs={24} lg={12}>
-          <Card>
-            <Title level={5} style={{ marginBottom: 4, fontWeight: 600 }}>
-              Revenue Trends
-            </Title>
-            <Text type="secondary" style={{ fontSize: 13, display: 'block', marginBottom: 24 }}>
-              Monthly revenue vs expenses (last 6 months)
-            </Text>
+      {/* Charts Row 1 */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Revenue Trends</CardTitle>
+            <p className="text-sm text-muted-foreground">Monthly revenue vs expenses (last 12 months)</p>
+          </CardHeader>
+          <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <AreaChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E3E8EE" vertical={false} />
-                <XAxis dataKey="month" axisLine={false} tickLine={false} style={{ fontSize: 13, fill: '#425466' }} />
-                <YAxis axisLine={false} tickLine={false} style={{ fontSize: 13, fill: '#425466' }} />
-                <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E3E8EE', boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11)' }} />
-                <Area type="monotone" dataKey="revenue" stroke="#635BFF" fill="#635BFF" fillOpacity={0.1} strokeWidth={2} name="Revenue" />
-                <Area type="monotone" dataKey="expenses" stroke="#DF1B41" fill="#DF1B41" fillOpacity={0.1} strokeWidth={2} name="Expenses" />
+                <defs>
+                  <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="hsl(var(--error))" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="hsl(var(--error))" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis dataKey="month" className="text-xs" />
+                <YAxis className="text-xs" />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px'
+                  }}
+                />
+                <Legend />
+                <Area 
+                  type="monotone" 
+                  dataKey="revenue" 
+                  stroke="hsl(var(--primary))" 
+                  fillOpacity={1} 
+                  fill="url(#colorRevenue)"
+                  name="Revenue"
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="expenses" 
+                  stroke="hsl(var(--error))" 
+                  fillOpacity={1} 
+                  fill="url(#colorExpenses)"
+                  name="Expenses"
+                />
               </AreaChart>
             </ResponsiveContainer>
-          </Card>
-        </Col>
+          </CardContent>
+        </Card>
 
-        <Col xs={24} lg={12}>
-          <Card>
-            <Title level={5} style={{ marginBottom: 4, fontWeight: 600 }}>
-              Settlement Status
-            </Title>
-            <Text type="secondary" style={{ fontSize: 13, display: 'block', marginBottom: 24 }}>
-              Current settlement breakdown
-            </Text>
+        <Card>
+          <CardHeader>
+            <CardTitle>Settlement Status</CardTitle>
+            <p className="text-sm text-muted-foreground">Current settlement breakdown</p>
+          </CardHeader>
+          <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -223,88 +193,84 @@ const Dashboard = () => {
                   cy="50%"
                   labelLine={false}
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
+                  outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
-                  strokeWidth={0}
                 >
                   {settlementData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E3E8EE', boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11)' }} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px'
+                  }}
+                />
               </PieChart>
             </ResponsiveContainer>
-          </Card>
-        </Col>
-      </Row>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Top Customers */}
-      <Card style={{ marginBottom: 20 }}>
-        <Title level={5} style={{ marginBottom: 4, fontWeight: 600 }}>
-          Top 5 Customers by Volume
-        </Title>
-        <Text type="secondary" style={{ fontSize: 13, display: 'block', marginBottom: 24 }}>
-          Highest transaction volumes this month
-        </Text>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={topCustomers} layout="vertical">
-            <CartesianGrid strokeDasharray="3 3" stroke="#E3E8EE" horizontal={false} />
-            <XAxis type="number" axisLine={false} tickLine={false} style={{ fontSize: 13, fill: '#425466' }} />
-            <YAxis dataKey="name" type="category" width={120} axisLine={false} tickLine={false} style={{ fontSize: 13, fill: '#425466' }} />
-            <Tooltip formatter={(value: number) => `$${value.toLocaleString()}`} contentStyle={{ borderRadius: 8, border: '1px solid #E3E8EE', boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11)' }} />
-            <Bar dataKey="volume" fill="#635BFF" radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+      <Card>
+        <CardHeader>
+          <CardTitle>Top 5 Customers by Volume</CardTitle>
+          <p className="text-sm text-muted-foreground">Highest transaction volumes this month</p>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={topCustomers} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+              <XAxis type="number" className="text-xs" />
+              <YAxis dataKey="name" type="category" width={120} className="text-xs" />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '8px'
+                }}
+                formatter={(value: number) => `$${value.toLocaleString()}`}
+              />
+              <Bar dataKey="volume" fill="hsl(var(--primary))" radius={[0, 8, 8, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
       </Card>
 
       {/* Recent Activity */}
       <Card>
-        <Title level={5} style={{ marginBottom: 4, fontWeight: 600 }}>
-          Recent Activity
-        </Title>
-        <Text type="secondary" style={{ fontSize: 13, display: 'block', marginBottom: 24 }}>
-          Latest transactions and events
-        </Text>
-        <List
-          itemLayout="horizontal"
-          dataSource={recentActivity}
-          renderItem={(item) => {
-            const Icon = item.icon;
-            return (
-              <List.Item
-                style={{
-                  padding: '16px 0',
-                  transition: 'background-color 0.15s ease',
-                  borderRadius: 6,
-                }}
-              >
-                <List.Item.Meta
-                  avatar={
-                    <div style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 6,
-                      background: item.color,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                    }}>
-                      <Icon style={{ fontSize: 20 }} />
-                    </div>
-                  }
-                  title={<Text style={{ fontWeight: 500, fontSize: 15 }}>{item.action}</Text>}
-                  description={<Text type="secondary" style={{ fontSize: 13 }}>{item.entity}</Text>}
-                />
-                <div style={{ textAlign: 'right' }}>
-                  <Text strong style={{ display: 'block', fontSize: 15 }}>{item.amount}</Text>
-                  <Text type="secondary" style={{ fontSize: 12 }}>{item.time}</Text>
+        <CardHeader>
+          <CardTitle>Recent Activity</CardTitle>
+          <p className="text-sm text-muted-foreground">Latest transactions and events</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {[
+              { action: 'Settlement approved', entity: 'TSP Partner A', amount: '$15,420', time: '2 minutes ago', icon: DollarSign, color: 'text-success' },
+              { action: 'Invoice generated', entity: 'Acme Corp', amount: '$8,750', time: '15 minutes ago', icon: CreditCard, color: 'text-primary' },
+              { action: 'Dispute raised', entity: 'TechStart Inc', amount: '$3,200', time: '1 hour ago', icon: AlertCircle, color: 'text-error' },
+              { action: 'New customer added', entity: 'Global Finance', amount: '-', time: '2 hours ago', icon: Users, color: 'text-muted-foreground' },
+              { action: 'Settlement completed', entity: 'Swift Pay', amount: '$12,300', time: '3 hours ago', icon: DollarSign, color: 'text-success' },
+            ].map((activity, idx) => (
+              <div key={idx} className="flex items-center gap-4 pb-4 last:pb-0 border-b last:border-0">
+                <div className={`rounded-full p-2 bg-muted ${activity.color}`}>
+                  <activity.icon className="h-4 w-4" />
                 </div>
-              </List.Item>
-            );
-          }}
-        />
+                <div className="flex-1">
+                  <p className="text-sm font-medium">{activity.action}</p>
+                  <p className="text-xs text-muted-foreground">{activity.entity}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-semibold financial-number">{activity.amount}</p>
+                  <p className="text-xs text-muted-foreground">{activity.time}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
       </Card>
     </div>
   );

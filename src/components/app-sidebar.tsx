@@ -1,75 +1,97 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Layout, Menu, Typography } from 'antd';
+import { 
+  LayoutDashboard, 
+  Settings, 
+  FileText, 
+  Wallet, 
+  MessageSquare,
+  Users,
+  DollarSign
+} from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 import {
-  DashboardOutlined,
-  SettingOutlined,
-  FileTextOutlined,
-  WalletOutlined,
-  WarningOutlined,
-  SwapOutlined,
-} from '@ant-design/icons';
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarHeader,
+  SidebarFooter,
+} from '@/components/ui/sidebar';
+import { useAuthStore } from '@/stores/auth-store';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
-const { Sider } = Layout;
-const { Title } = Typography;
-
-interface AppSidebarProps {
-  collapsed: boolean;
-  onCollapse: (collapsed: boolean) => void;
-}
-
-const menuItems = [
-  { key: '/', label: 'Dashboard', icon: <DashboardOutlined /> },
-  { key: '/configuration', label: 'Configuration', icon: <SettingOutlined /> },
-  { key: '/settlements', label: 'Settlements', icon: <SwapOutlined /> },
-  { key: '/invoices', label: 'Invoices', icon: <FileTextOutlined /> },
-  { key: '/balance', label: 'Balance', icon: <WalletOutlined /> },
-  { key: '/disputes', label: 'Disputes', icon: <WarningOutlined /> },
+const mainItems = [
+  { title: 'Dashboard', url: '/', icon: LayoutDashboard },
+  { title: 'Configuration', url: '/configuration', icon: Settings },
+  { title: 'TSP Settlement', url: '/settlements', icon: DollarSign },
+  { title: 'Invoices', url: '/invoices', icon: FileText },
+  { title: 'Balance', url: '/balance', icon: Wallet },
+  { title: 'Disputes', url: '/disputes', icon: MessageSquare },
 ];
 
-export function AppSidebar({ collapsed, onCollapse }: AppSidebarProps) {
-  const location = useLocation();
-  const navigate = useNavigate();
+export function AppSidebar() {
+  const user = useAuthStore((state) => state.user);
 
   return (
-    <Sider
-      collapsible
-      collapsed={collapsed}
-      onCollapse={onCollapse}
-      width={240}
-      style={{
-        overflow: 'auto',
-        height: '100vh',
-        position: 'sticky',
-        left: 0,
-        top: 0,
-        bottom: 0,
-      }}
-    >
-      <div style={{ 
-        padding: collapsed ? '16px 8px' : '16px 24px', 
-        textAlign: collapsed ? 'center' : 'left',
-        borderBottom: '1px solid rgba(227, 232, 238, 0.2)'
-      }}>
-        <Title 
-          level={4} 
-          style={{ 
-            margin: 0, 
-            color: '#635BFF',
-            fontSize: collapsed ? '16px' : '20px',
-            fontWeight: 700
-          }}
-        >
-          {collapsed ? 'BS' : 'BillSettle'}
-        </Title>
-      </div>
+    <Sidebar collapsible="icon">
+      <SidebarHeader className="border-b border-sidebar-border p-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+            <DollarSign className="h-5 w-5 text-primary-foreground" />
+          </div>
+          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+            <span className="text-sm font-semibold text-sidebar-foreground">BillSettle</span>
+            <span className="text-xs text-sidebar-foreground/60">Settlement Platform</span>
+          </div>
+        </div>
+      </SidebarHeader>
 
-      <Menu
-        mode="inline"
-        selectedKeys={[location.pathname]}
-        items={menuItems}
-        onClick={({ key }) => navigate(key)}
-        style={{ borderRight: 0, marginTop: 8 }}
-      />
-    </Sider>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {mainItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink 
+                      to={item.url}
+                      end={item.url === '/'}
+                      className={({ isActive }) =>
+                        isActive
+                          ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                          : 'hover:bg-sidebar-accent/50'
+                      }
+                    >
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.title}</span>
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter className="border-t border-sidebar-border p-4">
+        <div className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center">
+          <Avatar className="h-8 w-8">
+            <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+              {user?.name.split(' ').map(n => n[0]).join('') || 'U'}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+            <span className="text-sm font-medium text-sidebar-foreground">{user?.name}</span>
+            <span className="text-xs text-sidebar-foreground/60 capitalize">
+              {user?.role.replace('-', ' ')}
+            </span>
+          </div>
+        </div>
+      </SidebarFooter>
+    </Sidebar>
   );
 }
