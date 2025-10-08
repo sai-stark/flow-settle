@@ -30,7 +30,7 @@ All colors MUST be HSL.
     --muted: 220 13% 91%;
     --muted-foreground: 220 9% 46%;
 
-    --accent: 151 81% 96%;
+    --accent: 138 100% 75%;
     --accent-foreground: 160 84% 39%;
 
     /* Status Colors */
@@ -57,7 +57,7 @@ All colors MUST be HSL.
     --radius: 0.5rem;
 
     /* Sidebar - Light Mint Theme */
-    --sidebar-background: 151 81% 96%;
+    --sidebar-background: 138 100% 75%;
     --sidebar-foreground: 160 84% 16%;
     --sidebar-primary: 160 84% 39%;
     --sidebar-primary-foreground: 0 0% 100%;

@@ -24,7 +24,7 @@ export default {
           foreground: "hsl(var(--primary-foreground))",
           hover: "hsl(var(--primary-hover))",
           light: "hsl(var(--primary-light))",
-          50: "hsl(151 81% 96%)",
+          50: "hsl(138 100% 75%)",
           100: "hsl(152 76% 88%)",
           200: "hsl(154 75% 79%)",
           300: "hsl(154 75% 68%)",
